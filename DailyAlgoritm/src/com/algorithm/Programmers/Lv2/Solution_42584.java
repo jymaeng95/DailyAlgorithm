@@ -1,3 +1,5 @@
+package com.algorithm.Programmers.Lv2;
+
 // 프로그래머스 (LV2 주식가격)
 public class Solution_42584 {
     public int[] solution(int[] prices) {

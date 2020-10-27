@@ -1,4 +1,4 @@
-//프로그래머스 (LV2  다리를 지나는 트럭)
+package com.algorithm.Programmers.Lv2;//프로그래머스 (LV2  다리를 지나는 트럭)
 
 import java.util.LinkedList;
 import java.util.Queue;

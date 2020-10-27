@@ -1,3 +1,5 @@
+package com.algorithm.Programmers.Lv2;
+
 // 프로그래머스(LV2 멀쩡한 사각형)
 public class Solution_62048 {
     public long solution(long w, long h) {

@@ -1,3 +1,5 @@
+package com.algorithm.Programmers.Lv2;
+
 import java.util.*;
 
 // 프로그래머스 (LV2 프린터)

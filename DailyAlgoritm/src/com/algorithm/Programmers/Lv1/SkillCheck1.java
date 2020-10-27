@@ -1,3 +1,5 @@
+package com.algorithm.Programmers.Lv1;
+
 public class SkillCheck1 {
 
     public long solution(int n){

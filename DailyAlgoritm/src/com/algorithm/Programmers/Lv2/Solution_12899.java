@@ -1,3 +1,4 @@
+package com.algorithm.Programmers.Lv2;
 
 //프로그래머스 (124 나라의 숫자)
 public class Solution_12899 {

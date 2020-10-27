@@ -1,3 +1,5 @@
+package com.algorithm.Programmers.Lv2;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

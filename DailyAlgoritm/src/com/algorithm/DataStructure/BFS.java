@@ -1,3 +1,5 @@
+package com.algorithm.DataStructure;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -82,19 +84,12 @@ public class BFS {
         list.put(0,1);
         list.put(0,2);
         list.put(0,3);
-        list.put(0,4);
 
-        list.put(1,2);
         list.put(1,3);
-        list.put(1,4);
 
 
         list.put(2,3);
-        list.put(2,4);
 
-        list.put(3,4);
-
-        list.put(4,3);
         list.printGraphToAdjList();
         list.bfs(0);
         System.out.println();
