@@ -2,6 +2,7 @@ package com.algorithm.Baekjoon;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class Main_2667 {
     }
 
     public static List<LinkedList<Index>> node = new ArrayList<LinkedList<Index>>();
+    public static int vilCount = 0;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -64,63 +66,68 @@ public class Main_2667 {
         }
         boolean[][] visited = new boolean[mapSize][mapSize];
         List<Integer> village = new ArrayList<>();
-        for(int i=0;i<map.length;i++){
-            for(int j=0;j<map[i].length;j++){
-                if(map[i][j] == 1) {
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[i].length; j++) {
+                if (map[i][j] == 1) {
                     if (!visited[i][j]) {
                         village.add(test.dfs(i, j, visited));
                     }
                 }
             }
         }
-        System.out.println(village);
+        Collections.sort(village);
+        bw.write(String.valueOf(village.size()));
+        bw.newLine();
+        for (int count : village) {
+            bw.write(String.valueOf(count));
+            bw.newLine();
+        }
         br.close();
         bw.close();
     }
 
     public void checkConnect(int[][] map, int i, int j, int mapSize) {
-        int orgIndex = (i*7) +j ;
+        int orgIndex = (i * 7) + j;
         if (i > 0) {
             //위 탐색
             if (map[i - 1][j] == 1)
-                linkNode(i - 1, j,orgIndex);
+                linkNode(i - 1, j, orgIndex);
         }
         if (i < mapSize - 1) {
             //아래 탐색
             if (map[i + 1][j] == 1)
-                linkNode(i + 1, j,orgIndex);
+                linkNode(i + 1, j, orgIndex);
         }
         if (j > 0) {
             //왼쪽 탐색
             if (map[i][j - 1] == 1)
-                linkNode(i, j - 1,orgIndex);
+                linkNode(i, j - 1, orgIndex);
         }
         if (j < mapSize - 1) {
             //오른쪽 탐색
             if (map[i][j + 1] == 1)
-                linkNode(i, j + 1,orgIndex);
+                linkNode(i, j + 1, orgIndex);
         }
 
     }
 
-    public void linkNode(int i, int j,int orgIndex) {
+    public void linkNode(int i, int j, int orgIndex) {
         node.get(orgIndex).add(new Index(i, j));
     }
 
     public int dfs(int i, int j, boolean[][] visited) {
-        int count = 0;
-        dfsUtil(i, j, visited, count);
-
-        return count;
+        vilCount = 0;
+        dfsUtil(i, j, visited);
+        return vilCount;
     }
 
-    public void dfsUtil(int i, int j, boolean[][] visited, int count) {
+    public void dfsUtil(int i, int j, boolean[][] visited) {
         if (visited[i][j]) return;
         visited[i][j] = true;
-        count++;
+        vilCount++;
         int nodeIndex = (i * 7) + j;
         for (Index index : node.get(nodeIndex)) {
-            dfsUtil(index.getxIndex(), index.getyIndex(), visited, count);
+            dfsUtil(index.getxIndex(), index.getyIndex(), visited);
         }
     }
 }
