@@ -70,7 +70,7 @@ public class Main_2667 {
             for (int j = 0; j < map[i].length; j++) {
                 if (map[i][j] == 1) {
                     if (!visited[i][j]) {
-                        village.add(test.dfs(i, j, visited));
+                        village.add(test.dfs(i, j, visited,mapSize));
                     }
                 }
             }
@@ -87,7 +87,7 @@ public class Main_2667 {
     }
 
     public void checkConnect(int[][] map, int i, int j, int mapSize) {
-        int orgIndex = (i * 7) + j;
+        int orgIndex = (i * mapSize) + j;
         if (i > 0) {
             //위 탐색
             if (map[i - 1][j] == 1)
@@ -115,19 +115,19 @@ public class Main_2667 {
         node.get(orgIndex).add(new Index(i, j));
     }
 
-    public int dfs(int i, int j, boolean[][] visited) {
+    public int dfs(int i, int j, boolean[][] visited,int mapSize) {
         vilCount = 0;
-        dfsUtil(i, j, visited);
+        dfsUtil(i, j, visited,mapSize);
         return vilCount;
     }
 
-    public void dfsUtil(int i, int j, boolean[][] visited) {
+    public void dfsUtil(int i, int j, boolean[][] visited,int mapSize) {
         if (visited[i][j]) return;
         visited[i][j] = true;
         vilCount++;
-        int nodeIndex = (i * 7) + j;
+        int nodeIndex = (i * mapSize) + j;
         for (Index index : node.get(nodeIndex)) {
-            dfsUtil(index.getxIndex(), index.getyIndex(), visited);
+            dfsUtil(index.getxIndex(), index.getyIndex(), visited,mapSize);
         }
     }
 }
