@@ -1,6 +1,6 @@
 package com.algorithm.Programmers.Lv1;
 
-public class SkillCheck1 {
+public class SkillCheck {
 
     public long solution(int n){
         long i=1;
@@ -23,7 +23,7 @@ public class SkillCheck1 {
     }
 
     public static void main(String[] args) {
-        SkillCheck1 sk = new SkillCheck1();
+        SkillCheck sk = new SkillCheck();
         System.out.println(sk.solution(3));
     }
 }
