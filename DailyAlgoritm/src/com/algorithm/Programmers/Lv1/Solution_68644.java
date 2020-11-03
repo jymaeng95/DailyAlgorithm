@@ -1,7 +1,8 @@
 package com.algorithm.Programmers.Lv1;
 
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
+import java.util.TreeSet;
 
 public class Solution_68644 {
     public static void main(String[] args) {
@@ -9,20 +10,20 @@ public class Solution_68644 {
         solution(numbers);
     }
     public static int[] solution(int[] numbers) {
-        int[] answer = {};
-        int sum = 0;
-        Set<Integer> numSet = new HashSet<>();
-        Set<Integer> sumSet = new HashSet<>();
-        for(int num : numbers){
-            numSet.add(num);
-        }
-        for(int i=0;i< numSet.size();i++){
-            for(int j=i;j< numSet.size();j++){
-                System.out.println(sum);
-                sumSet.add(sum);
+        Set<Integer> sumSet = new TreeSet<>();
+        for(int i=0;i<numbers.length;i++){
+            for(int j=i;j<numbers.length;j++){
+                sumSet.add(numbers[i] + numbers[j]);
             }
         }
-        System.out.println(sumSet.toString());
+        int[] answer = new int[sumSet.size()];
+        Iterator<Integer> it = sumSet.iterator();
+        int i=0;
+        while(it.hasNext()){
+            answer[i] = it.next();
+            it.remove();
+            i++;
+        }
         return answer;
     }
 }
