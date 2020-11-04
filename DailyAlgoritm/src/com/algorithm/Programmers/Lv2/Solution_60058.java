@@ -5,7 +5,7 @@ import java.util.Stack;
 // 프로그래머스 LV2(괄호 변환)
 public class Solution_60058 {
     public static void main(String[] args) {
-        System.out.println(solution("()))((()"));
+        System.out.println(solution("))((()"));
     }
     public static String solution(String p) {
         // 1. 입력이 빈 문자열인 경우, 빈 문자열을 반환합니다.
