@@ -44,7 +44,7 @@ public class Solution_60058 {
         // 4-1. 빈 문자열에 첫 번째 문자로 '('를 붙입니다.
         // 4-2. 문자열 v에 대해 1단계부터 재귀적으로 수행한 결과 문자열을 이어 붙입니다.
         // 4-3. ')'를 다시 붙입니다.
-        answer.append("("+solution(v.toString())+")");
+        answer.append("(").append(solution(v.toString())).append(")");
         u.deleteCharAt(0);
         u.deleteCharAt(u.length()-1);
         answer.append(swap(u.toString()));
@@ -62,18 +62,18 @@ public class Solution_60058 {
         }
         //스택 사이즈가 0이면 옳바른 문자열
         //0이 아닌 경우 ( 가 남아있음
-        return st.size() < 1 ? true : false;
+        return st.size() < 1;
     }
 
     //   4-4. u의 첫 번째와 마지막 문자를 제거하고, 나머지 문자열의 괄호 방향을 뒤집어서 뒤에 붙입니다.
     public static String swap(String u){
-        String swapString = "";
+        StringBuilder swapString = new StringBuilder();
         for(char c : u.toCharArray()){
             if(c=='(')
-                swapString+=")";
+                swapString.append(")");
             if(c==')')
-                swapString+="(";
+                swapString.append("(");
         }
-        return swapString;
+        return swapString.toString();
     }
 }
