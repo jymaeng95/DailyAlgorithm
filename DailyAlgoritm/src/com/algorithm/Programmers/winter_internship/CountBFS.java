@@ -1,4 +1,4 @@
-package com.algorithm.Programmers.winter;
+package com.algorithm.Programmers.winter_internship;
 
 import java.io.IOException;
 import java.util.*;

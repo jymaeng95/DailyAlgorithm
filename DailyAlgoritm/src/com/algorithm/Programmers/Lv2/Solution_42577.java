@@ -12,12 +12,8 @@ public class Solution_42577 {
         boolean answer = true;
 
         // Comparator를 통해 배열 길이 순으로 오름차순 정렬
-        Comparator<String> comparator = new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return Integer.compare(o1.length(),o2.length());
-            }
-        };
+        Comparator<String> comparator = (s1,s2) -> Integer.compare(s1.length(),s2.length());
+
         Arrays.sort(phone_book,comparator);
 
         for(int i=0;i< phone_book.length;i++){
