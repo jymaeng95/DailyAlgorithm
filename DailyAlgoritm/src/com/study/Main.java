@@ -16,7 +16,13 @@ public class Main {
 //        System.out.println(maxNumber.getMaxNumber(3,1));
 
         //3. 람다식을 이용하여 호출 방식
-        MaxNumber maxNumber = (x, y) -> x >= y ? x : y;
-        System.out.println(maxNumber.getMaxNumber(3,1));
+//        MaxNumber maxNumber = (x, y) -> x >= y ? x : y;
+//        System.out.println(maxNumber.getMaxNumber(3,1));
+
+        Car car = new Tucson();
+//        Car car = new Tico();
+
+        System.out.println("투싼 신형은 하이브리드인가? : "+ car.isHybrid());
+//        System.out.println("티코는 하이브리드인가? : " + car.isHybrid());
     }
 }
