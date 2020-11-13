@@ -29,7 +29,7 @@ public class Solution_42579 {
         List<String> keySet = new ArrayList<>(totalCount.keySet());
         //totalCount Map에서 합계를 기준으로 내림차순으로 정렬
         Collections.sort(keySet, (o1,o2) -> totalCount.get(o2).compareTo(totalCount.get(o1)));
-
+        
         //index Map에서 인덱스의 해당 값으로 내림차순 정렬
         //ex) classic의 경우 0:500, 2:150, 3:800 -> 3:800, 0:500, 2:150 정렬
         for(String key : keySet){
