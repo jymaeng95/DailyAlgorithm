@@ -4,7 +4,7 @@ import java.util.PriorityQueue;
 
 public class Solution_42626 {
     public static void main(String[] args) {
-        int[] scoville = {1,2,3};
+        int[] scoville = {3,2,4,6,1};
         int k = 14;
         System.out.println(solution(scoville,k));
     }
@@ -16,7 +16,8 @@ public class Solution_42626 {
         //우선 순위 큐에 데이터 넣기
         for(int scv : scoville)
             pq.offer(scv);
-
+        for(int s : pq)
+            System.out.println(s);
         //큐 size가 1인 경우 값 비교만 필요
         //큐의 가장 최소 값이 K 이상인 경우 음식 섞어줄 필요 x
         while(pq.size()>1 && pq.peek() < K){
