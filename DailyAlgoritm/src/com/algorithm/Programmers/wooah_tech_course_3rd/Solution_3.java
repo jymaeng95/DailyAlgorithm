@@ -1,4 +1,4 @@
-package com.algorithm.wooah_tech_course_3rd;
+package com.algorithm.Programmers.wooah_tech_course_3rd;
 
 public class Solution_3 {
     public static void main(String[] args) {

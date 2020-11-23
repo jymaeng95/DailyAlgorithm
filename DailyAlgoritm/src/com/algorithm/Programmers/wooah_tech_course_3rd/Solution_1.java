@@ -1,4 +1,4 @@
-package com.algorithm.wooah_tech_course_3rd;
+package com.algorithm.Programmers.wooah_tech_course_3rd;
 
 import java.util.HashMap;
 import java.util.Map;
