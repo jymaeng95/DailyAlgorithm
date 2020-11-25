@@ -24,5 +24,7 @@ public class Main {
 
         System.out.println("투싼 신형은 하이브리드인가? : "+ car.isHybrid());
 //        System.out.println("티코는 하이브리드인가? : " + car.isHybrid());
+
+
     }
 }
