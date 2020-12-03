@@ -10,6 +10,7 @@ public class Main_10026 {
      * 하지만, 적록색약인 사람은 구역을 3개 볼 수 있다. (빨강-초록 2, 파랑 1)
      * 그림이 입력으로 주어졌을 때, 적록색약인 사람이 봤을 때와 아닌 사람이 봤을 때 구역의 수를 구하는 프로그램을 작성하시오.
      */
+
     static class RGB {
         private int x;
         private int y;
