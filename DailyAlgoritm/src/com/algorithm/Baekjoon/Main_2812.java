@@ -1,8 +1,9 @@
 package com.algorithm.Baekjoon;
 
-import java.io.*;
-import java.util.*;
 
+import java.io.*;
+import java.util.Stack;
+import java.util.StringTokenizer;
 
 //1876591234   91234
 public class Main_2812 {
@@ -14,29 +15,21 @@ public class Main_2812 {
         int N = Integer.parseInt(st.nextToken());
         int delCount = Integer.parseInt(st.nextToken());
         int size = N - delCount;
-        int index = 0;
-        StringBuilder sb = new StringBuilder();
+        int count = 0;
         String[] num = br.readLine().split("");
+        Stack<String> stack = new Stack<>();
 
-        while(sb.length() < size){
-            int max = 0;
-            int newIndex = 0;
-            if(index + delCount <num.length) {
-                for (int i = index; i <= num.length - delCount; i++) {
-                    if (max < Integer.parseInt(num[i])) {
-                        newIndex = i;
-                        max = Integer.parseInt(num[i]);
-                    }
-                }
+        for (int i = 0; i < N; i++) {
+            while (!stack.isEmpty() && count < delCount && Integer.parseInt(stack.peek()) < Integer.parseInt(num[i])) {
+                stack.pop();
+                count++;
             }
-            sb.append(max);
-            delCount -= newIndex - index;
-            index = newIndex+1;
-            if(delCount == 0||num.length-index+sb.length() == size) {
-                for (int i = index; i < num.length; i++)
-                    sb.append(num[i]);
-                break;
-            }
+            stack.push(num[i]);
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for(int i=0;i<size;i++){
+            sb.append(stack.get(i));
         }
         bw.write(sb.toString());
         br.close();
