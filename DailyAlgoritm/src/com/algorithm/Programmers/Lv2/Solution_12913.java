@@ -11,6 +11,7 @@ public class Solution_12913 {
         int[][] dp = new int[land.length][4];
         int idx = dp.length-1;
 
+        //첫 dp부분에 첫번째 행 값 넣어주기
         for(int i=0;i<4;i++)
             dp[0][i] = land[0][i];
 
@@ -26,6 +27,7 @@ public class Solution_12913 {
             }
         }
 
+        //마지막열 최댓값 뽑아오기
         return Math.max(Math.max(dp[idx][0],dp[idx][1]),Math.max(dp[idx][2],dp[idx][3]));
     }
 }
