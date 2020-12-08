@@ -8,6 +8,8 @@ public class Solution_64065 {
         solution(s);
     }
     public static int[] solution(String s) {
+        //튜플은 가장 많이 나온 원소 순서대로 저장됨을 확인
+        //중괄호 제거
         s = s.replaceAll("[{}]","");
         Map<String,Integer> count = new HashMap<>();
         for(String num : s.split(",")){
@@ -21,6 +23,8 @@ public class Solution_64065 {
         //value로 정렬
         List<Map.Entry<String, Integer>> list = new ArrayList<>(count.entrySet());
         Collections.sort(list,Collections.reverseOrder(Map.Entry.comparingByValue()));
+
+        //기존 코드
 //        Collections.sort(list, (o1, o2) -> o2.getValue().compareTo(o1.getValue()));
 
         int[] answer = new int[count.size()];
@@ -32,6 +36,4 @@ public class Solution_64065 {
 
         return answer;
     }
-
-
 }
