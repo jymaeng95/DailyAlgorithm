@@ -39,6 +39,8 @@ public class Main_1041 {
         bw.close();
     }
 
+
+
     private static long minSum(int[] dice) {
         long sum = 0;
         if (N == 1) {
@@ -55,6 +57,7 @@ public class Main_1041 {
          * 2면 : 4(n-1) + 4*(n-2)
          * 1면 : 4(n-1)(n-2) + (n-2)(n-2)
          */
+        //int * int값을 long에 저장하면 int값을 가지기 때문에 오버플로우 발생
         long oneSide = 4 * (N - 1) * (N - 2) + (N - 2) * (N - 2);
         long secondSide = 4 * (N - 1) + 4 * (N - 2);
         long thirdSide = 4;
