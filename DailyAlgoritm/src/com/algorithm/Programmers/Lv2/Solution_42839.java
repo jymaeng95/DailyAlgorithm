@@ -19,6 +19,7 @@ public class Solution_42839 {
         return isPrime();
     }
 
+    //
     public static void permutation(String[] arr, int depth, int n, int r) {
         if (depth == r) {
             StringBuilder s = new StringBuilder();
@@ -51,6 +52,7 @@ public class Solution_42839 {
             it.remove();
             if (num == 0 || num == 1)
                 continue;
+            // N이 N의 제곱근보다 크지 않은 어떤 소수로도 나눠지지 않는원칙을 통해 효율성 증대
             for (int i = 2; i <= Math.sqrt(num); i++) {
                 if (num % i == 0) {
                     flag = false;
