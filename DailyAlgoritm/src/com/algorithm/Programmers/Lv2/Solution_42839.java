@@ -1,57 +1,65 @@
 package com.algorithm.Programmers.Lv2;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 public class Solution_42839 {
-    public static int count=0;
+    public static Set<Integer> set;
+
     public static void main(String[] args) {
         System.out.println(solution("011"));
     }
+
     public static int solution(String numbers) {
-        int answer = 0;
-        int[]arr = new int[numbers.length()];
-        boolean[] visited = new boolean[numbers.length()];
-        for(int i=0;i<numbers.length();i++){
-            arr[i] = Integer.parseInt(String.valueOf(numbers.charAt(i)));
+        set = new HashSet<>();
+        for (int i = 0; i < numbers.length(); i++) {
+            permutation(numbers.split(""), 0, numbers.length(), i + 1);
         }
-        int r = arr.length;
-        while(r>0){
-            combination(arr,visited,0,arr.length,r);
-            r--;
-        }
-        answer = count;
-        return answer;
+        return isPrime();
     }
 
-    public static void combination(int[] arr, boolean[] visited, int depth, int n, int r){
-        if(r==0) {
-            isPrime(arr,visited,n);
+    public static void permutation(String[] arr, int depth, int n, int r) {
+        if (depth == r) {
+            StringBuilder s = new StringBuilder();
+            for (int i = 0; i < r; i++) {
+                s.append(arr[i]);
+            }
+            set.add(Integer.parseInt(s.toString()));
             return;
         }
-        if(depth == n)
-            return;
-        visited[depth] = true;
-        combination(arr,visited,depth+1,n,r-1);
+        for (int i = depth; i < n; i++) {
+            swap(arr, i, depth);
+            permutation(arr, depth + 1, n, r);
+            swap(arr, i, depth);
+        }
 
-        visited[depth] = false;
-        combination(arr,visited,depth+1,n,r);
     }
-    public static void isPrime(int[] arr, boolean[] visited, int n){
-        String num = "";
-        for(int i=0;i<n;i++){
-            if(visited[i]){
-                System.out.print(arr[i] +" ");
-                num += Integer.toString(arr[i]);
+
+    public static void swap(String[] arr, int i, int j) {
+        String temp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = temp;
+    }
+
+    public static int isPrime() {
+        int count = 0;
+        Iterator<Integer> it = set.iterator();
+        while (it.hasNext()) {
+            boolean flag = true;
+            int num = it.next();
+            it.remove();
+            if (num == 0 || num == 1)
+                continue;
+            for (int i = 2; i <= Math.sqrt(num); i++) {
+                if (num % i == 0) {
+                    flag = false;
+                    break;
+                }
             }
-        }
-        System.out.println();
-        boolean flag = true;
-        int combNum = Integer.parseInt(num);
-//        System.out.println(combNum);
-        for(int i=2;i*i<=combNum;i++){
-            if(combNum%i==0){
-                flag = false;
-            }
-            if(flag)
+            if (flag)
                 count++;
         }
+        return count;
     }
 }
