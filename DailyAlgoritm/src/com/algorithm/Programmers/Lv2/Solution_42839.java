@@ -19,6 +19,7 @@ public class Solution_42839 {
         return isPrime();
     }
 
+
     //
     public static void permutation(String[] arr, int depth, int n, int r) {
         if (depth == r) {
