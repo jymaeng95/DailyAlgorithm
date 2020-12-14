@@ -25,6 +25,7 @@ public class Solution_43163 {
     }
 
     private static void dfsUtil(String begin, String target, String[] words,int check, int index) {
+
         if (begin.equals(target)) {
             count = Math.min(count,check);
             visited[index] = false;
@@ -32,10 +33,12 @@ public class Solution_43163 {
         }
 
         visited[index] = true;
+        //변환 횟수 증가
         check++;
         for (int i = 0; i < words.length; i++) {
             int wordCount = 0;
             for (int j = 0; j < words[i].length(); j++) {
+                //단어 비교 한글자만 바뀐 것 체크
                 if (begin.charAt(j) == words[i].charAt(j)) {
                     wordCount++;
                 }
@@ -44,6 +47,8 @@ public class Solution_43163 {
                 dfsUtil(words[i],target,words,check,i+1);
             }
         }
+        //target에 도달하더라도 최소 횟수로 도달하는경우가 없을 수도 있기 때문에
+        //방문 처리를 풀어 남은 dfs도 수행하도록 처리
         visited[index] = false;
         return;
     }
