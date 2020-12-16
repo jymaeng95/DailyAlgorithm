@@ -8,8 +8,8 @@ public class Solution_42627 {
         private int elapsed;    //경과 시간
 
         public Disk(int start, int elapsed) {
-            this.start = start;
             this.elapsed = elapsed;
+            this.start = start;
         }
 
         public int getStart() {
