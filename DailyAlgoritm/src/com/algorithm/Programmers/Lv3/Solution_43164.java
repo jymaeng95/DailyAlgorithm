@@ -1,5 +1,4 @@
 package com.algorithm.Programmers.Lv3;
-
 import java.util.Collections;
 import java.util.LinkedList;
 
@@ -12,32 +11,28 @@ public class Solution_43164 {
 
     private static LinkedList<String> spot;
     private static boolean[] visited;
-
-    //    private static String route;
     public static String[] solution(String[][] tickets) {
-
         visited = new boolean[tickets.length];
         spot = new LinkedList<>();
-        for (int i = 0; i < tickets.length; i++) {
 
-            dfs(tickets, tickets[i][1], tickets[i][0], 0);
-        }
-        for (String s : spot)
-            System.out.println(s);
+        //항상 인천에서 시작
+        dfs(tickets,"ICN","ICN",0);
+
         Collections.sort(spot);
         String[] answer = spot.getFirst().split(" ");
         return answer;
     }
 
-    private static void dfs(String[][] tickets, String end, String route, int count) {
-        System.out.println(route);
+    private static void dfs(String[][] tickets, String start, String route, int count) {
+        //모든 티켓을 다 사용할 수 있는 경우
         if (count == visited.length) {
-            spot.add(route);
+            spot.offer(route);
             return;
         }
 
         for (int i = 0; i < tickets.length; i++) {
-            if (!visited[i] && tickets[i][0].equals(end)) {
+            // 티켓을 사용하지 않았으며, 도착한 공항과 다음 출발 공항이 동일 한 경우
+            if(!visited[i] && tickets[i][0].equals(start)) {
                 visited[i] = true;
                 dfs(tickets, tickets[i][1], route+" "+tickets[i][1], count + 1);
                 visited[i] = false;
