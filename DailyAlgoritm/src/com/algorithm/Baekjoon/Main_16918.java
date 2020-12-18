@@ -28,6 +28,7 @@ public class Main_16918 {
 
         afterBomb(grid);
 
+
         for (String[] arr : grid) {
             for (String s : arr) {
                 bw.write(s);
