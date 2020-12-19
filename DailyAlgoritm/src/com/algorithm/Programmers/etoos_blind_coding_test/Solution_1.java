@@ -1,5 +1,4 @@
 //package com.algorithm.Programmers.etoos_blind_coding_test;
-//
 //import java.util.*;
 //
 //public class Solution_1 {

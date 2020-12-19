@@ -1,5 +1,4 @@
 //package com.algorithm.Programmers.etoos_blind_coding_test;
-//
 //public class Solution_3 {
 //    public static void main(String[] args) {
 //        int[] s1 = {1,2,3,0,6,5,4};

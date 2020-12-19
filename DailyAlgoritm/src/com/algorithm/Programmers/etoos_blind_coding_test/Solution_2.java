@@ -63,7 +63,6 @@ MONEY가 0인 경우는 입력으로 주어지지 않습니다.
 MONEY가 양수이면 입금을, 음수이면 출금을 의미합니다.
 현재 잔액보다 출금하려는 금액이 큰 경우는 입력으로 주어지지 않습니다.
 MM/DD, R, MONEY는 하나의 공백(스페이스)으로 구분되어 있습니다.
-
  */
 public class Solution_2 {
     public static void main(String[] args) {
