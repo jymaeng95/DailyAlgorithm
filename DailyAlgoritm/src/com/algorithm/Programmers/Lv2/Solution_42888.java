@@ -10,9 +10,12 @@ public class Solution_42888 {
     public static String[] solution(String[] record) {
         Map<String,String> userInfo = new HashMap<>();
         List<String> list = new ArrayList<>();
+
         for(String rcd : record) {
             StringTokenizer st = new StringTokenizer(rcd);
             String act = st.nextToken();
+
+            // Enter, Change인 경우에 Map에 넣어줌, 이미 키 값이 있는 경우 밸류 값이 변함
 
             if(act.equals("Enter") || act.equals("Change")) {
                 String userId = st.nextToken();
@@ -26,6 +29,7 @@ public class Solution_42888 {
             StringTokenizer st = new StringTokenizer(rcd);
             String act = st.nextToken();
             String userId = st.nextToken();
+
             switch (act) {
                 case "Enter" :
                     list.add(userInfo.get(userId)+"님이 들어왔습니다.");
