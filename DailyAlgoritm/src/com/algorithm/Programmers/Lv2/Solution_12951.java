@@ -1,5 +1,5 @@
 package com.algorithm.Programmers.Lv2;
-
+//Jaden Case 문자열 만들기
 public class Solution_12951 {
     public static void main(String[] args) {
         System.out.println(solution(" 3k "));

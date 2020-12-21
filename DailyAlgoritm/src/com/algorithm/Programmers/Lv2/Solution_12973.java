@@ -1,7 +1,7 @@
 package com.algorithm.Programmers.Lv2;
 
 import java.util.Stack;
-
+//짝지어 제거하기
 public class Solution_12973 {
     public static void main(String[] args) {
         String s ="bccbcc";

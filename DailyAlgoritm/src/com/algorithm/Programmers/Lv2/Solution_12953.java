@@ -1,5 +1,5 @@
 package com.algorithm.Programmers.Lv2;
-
+//N개의 최소공배수
 public class Solution_12953 {
     public static void main(String[] args) {
         int[] arr = {1,2,3};
