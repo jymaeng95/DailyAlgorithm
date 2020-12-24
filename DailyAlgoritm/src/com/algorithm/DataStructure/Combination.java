@@ -22,6 +22,7 @@ public class Combination {
 
     // 백트래킹 사용
     // 사용 예시 : combination(arr, visited, 0, n, r)
+    // n = length, r = nCr,
     static void combination(int[] arr, boolean[] visited, int start, int n, int r) {
         if (r == 0) {
             print(arr, visited, n);
