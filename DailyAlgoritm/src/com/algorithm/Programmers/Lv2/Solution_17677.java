@@ -23,6 +23,7 @@ public class Solution_17677 {
                 first.add((splitFirst[i]+splitFirst[i+1]).toUpperCase());
         }
 
+        //리스트에 알파벳 판별 후 넣기
         for(int i=0;i<splitSecond.length-1;i++){
             if(isAlpha(splitSecond[i]) && isAlpha(splitSecond[i+1]))
                 second.add((splitSecond[i]+splitSecond[i+1]).toUpperCase());
