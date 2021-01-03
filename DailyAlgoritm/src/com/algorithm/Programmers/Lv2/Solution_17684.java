@@ -14,6 +14,7 @@ public class Solution_17684 {
     private static final String[] ALPHA = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"};
     public static int[] solution(String msg) {
         Map<String,Integer> dict = new HashMap<>();
+
         List<Integer> list = new ArrayList<>();
         for(int i=0;i<ALPHA.length;i++){
             dict.put(ALPHA[i], i+1);
@@ -21,17 +22,25 @@ public class Solution_17684 {
 
         String curMsg = String.valueOf(msg.charAt(0));
         for(int i=0;i<msg.length()-1;i++){
-            String addMsg = curMsg + String.valueOf(msg.charAt(i+1));
+            String nextMsg = String.valueOf(msg.charAt(i + 1));
+
+            //현재 글자와 다음 글자를 합쳐줌
+            String addMsg = curMsg + nextMsg;
+
+            //사전에 있는 단어의 경우 계속 이어붙히기
             if(dict.containsKey(addMsg)) {
                 curMsg = addMsg;
                 continue;
             }
+
+            //사전에 없는 경우 사전에 넣어줌
             dict.put(addMsg,dict.size()+1);
+
+            //색인 번호 리스트에 넣기
             list.add(dict.get(curMsg));
-            curMsg = String.valueOf(msg.charAt(i+1));
+            curMsg = nextMsg;
         }
         list.add(dict.get(curMsg));
-        System.out.println(list);
 
 
         return list.stream().mapToInt(Integer::intValue).toArray();
