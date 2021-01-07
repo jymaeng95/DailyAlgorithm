@@ -44,8 +44,12 @@ public class Main_1202 {
 
         long sum = 0;
         int idx = 0;
+
+        //무게 오름차순 정렬
         Collections.sort(bag);
         Collections.sort(gemList, Comparator.comparingInt(o->o.weight));
+
+        //최대힙
         PriorityQueue<Integer> pq = new PriorityQueue<>(Collections.reverseOrder());
         for (int bg : bag) {
             while(idx < gemList.size()){
