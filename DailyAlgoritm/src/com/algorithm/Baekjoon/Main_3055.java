@@ -47,6 +47,7 @@ public class Main_3055 {
             }
         }
 
+        //큐에 넣기 (물, 고슴도치 순서)
         Index hedgehog = new Index();
         queue = new LinkedList<>();
         for (int i = 0; i < R; i++) {
@@ -72,6 +73,8 @@ public class Main_3055 {
             if (visited[index.x][index.y])
                 continue;
             visited[index.x][index.y] = true;
+
+            // 물의 경우 돌과 비버 굴 제외하고 이동 가능
             if (index.who.equals("*")) {
                 for (int i = 0; i < DX.length; i++) {
                     int nx = DX[i] + index.x;
@@ -82,6 +85,8 @@ public class Main_3055 {
                     }
                 }
             } else {
+                // 고슴도치의 경우 물이 아직 닿지 않은 부분(.)과 비버 굴만 이동 가능
+                // 또한 방문한 곳은 이동 불가능
                 for (int i = 0; i < DX.length; i++) {
                     int nx = DX[i] + index.x;
                     int ny = DY[i] + index.y;
