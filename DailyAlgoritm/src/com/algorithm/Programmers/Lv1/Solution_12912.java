@@ -2,7 +2,7 @@ package com.algorithm.Programmers.Lv1;
 
 public class Solution_12912 {
     public static void main(String[] args) {
-        solution(a,b);
+        solution(3,5);
     }
 
     public static long solution(int a, int b) {
