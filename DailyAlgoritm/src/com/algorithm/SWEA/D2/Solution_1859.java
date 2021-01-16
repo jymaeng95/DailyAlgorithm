@@ -3,6 +3,7 @@ package com.algorithm.SWEA.D2;
 import java.io.*;
 import java.util.StringTokenizer;
 
+//백만장자 프로젝트
 public class Solution_1859 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
