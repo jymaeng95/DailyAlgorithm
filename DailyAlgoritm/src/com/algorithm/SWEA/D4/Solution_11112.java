@@ -37,10 +37,13 @@ public class Solution_11112 {
     }
 
     private static String checkColor() {
+        //피타고라스 정리 대각선길이
         double range = Math.sqrt(Math.pow(c-a,2)+ Math.pow(d-b,2));
+        //직사각형 내 원
         if(p-r >= a && p+r <= c && q-r >= b && q+r <= d)
             return "NY";
-        else if(a > p-r && p+r > c && b > q-r && d < q+r && range <= 2*r)
+        //원 내 직사각형
+        if(a > p-r && p+r > c && b > q-r && d < q+r && range <= 2*r)
             return "YN";
         return "YY";
     }
