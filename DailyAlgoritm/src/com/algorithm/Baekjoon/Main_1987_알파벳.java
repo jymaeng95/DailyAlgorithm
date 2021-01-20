@@ -34,16 +34,20 @@ public class Main_1987_알파벳 {
     }
 
     private static void dfs(int x, int y, StringBuilder sb) {
+        //이미 나온 문자가 나오는 경우
         if (sb.toString().contains(board[x][y])) {
+            //현재 문자열의 길이와 이전 길이의 최댓값
             count = Math.max(count,sb.length());
             return;
         }
         if (visited[x][y])
             return;
+        //모든 문자열이 겹치지 않는 경우
         if(sb.length()+1 == R*C) {
             count = R * C;
             return;
         }
+
         visited[x][y] = true;
         sb.append(board[x][y]);
         for (int i = 0; i < DX.length; i++) {
@@ -53,6 +57,7 @@ public class Main_1987_알파벳 {
                 dfs(nx, ny, sb);
             }
         }
+        //현재 인덱스 문자열 삭제
         sb.delete(sb.length() - 1, sb.length());
         visited[x][y] = false;
     }
