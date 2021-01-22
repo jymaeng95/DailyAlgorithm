@@ -2,6 +2,7 @@ package com.algorithm.Baekjoon;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
@@ -25,7 +26,7 @@ public class Main_1753_최단경로 {
     private static ArrayList<ArrayList<Node>> graph;
     private static boolean[] visited;
     private static int[] distance;
-
+    private static final int INF = 100_000_000;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -47,15 +48,11 @@ public class Main_1753_최단경로 {
         }
         visited = new boolean[V + 1];
         distance = new int[V + 1];
-        for (int i = 1; i <= V; i++) {
-            if (i == startVertex)
-                continue;
-            distance[i] = Integer.MAX_VALUE;
-        }
+        Arrays.fill(distance,INF);
         dijkstra(startVertex);
         for (int i = 1; i <= V; i++) {
 
-            if (distance[i] == Integer.MAX_VALUE) {
+            if (distance[i] == INF) {
                 bw.write("INF");
                 continue;
             }
@@ -68,6 +65,7 @@ public class Main_1753_최단경로 {
 
     private static void dijkstra(int startVertex) {
         PriorityQueue<Node> pq = new PriorityQueue<>();
+        distance[startVertex] = 0;
         pq.offer(new Node(startVertex, 0));
         while (!pq.isEmpty()) {
             Node node = pq.poll();
