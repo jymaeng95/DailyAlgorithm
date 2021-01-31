@@ -2,7 +2,7 @@ package com.algorithm.LeetCode.easy;
 
 public class Solution_7_Reverse_Integer {
     public static void main(String[] args) {
-        int reverse = reverse(111111111111);
+        int reverse = reverse(80808080);
         System.out.println(reverse);
     }
     public static int reverse(int x) {
