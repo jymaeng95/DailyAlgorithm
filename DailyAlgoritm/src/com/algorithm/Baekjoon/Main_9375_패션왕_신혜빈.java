@@ -28,7 +28,7 @@ public class Main_9375_패션왕_신혜빈 {
             String[] clothes = br.readLine().split(" ");
             if(map.containsKey(clothes[1])) {
                 map.replace(clothes[1],map.get(clothes[1])+1);
-                continue;˚
+                continue;
             }
             map.put(clothes[1],1);
         }
