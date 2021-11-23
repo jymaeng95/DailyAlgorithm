@@ -3,6 +3,7 @@ package com.algorithm.Baekjoon;
 import java.io.*;
 import java.util.StringTokenizer;
 
+/* 다시 풀기 */
 public class Main_9465_스티커 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
