@@ -15,18 +15,19 @@ public class Main_15486_퇴사_2 {
             this.pay = pay;
         }
     }
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
         int n = Integer.parseInt(br.readLine());
         List<Company> company = new ArrayList<>();
-        int[] dp = new int[n+1];
-        for(int i =0;i<n;i++){
-            StringTokenizer st =new StringTokenizer(br.readLine());
+        int[] dp = new int[n + 1];
+        for (int i = 0; i < n; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
             int time = Integer.parseInt(st.nextToken());
             int pay = Integer.parseInt(st.nextToken());
-            company.add(new Company(time,pay));
+            company.add(new Company(time, pay));
 
         }
 
@@ -38,17 +39,18 @@ public class Main_15486_퇴사_2 {
     }
 
     private static int getMaxPay(int[] dp, int n, List<Company> company) {
-        int max = 0;
-        for(int i =0;i<company.size();i++){
-            int time = company.get(i).time;
-            int pay = company.get(i).pay;
+        int max = dp[0];
+        for (int i = 1; i <= dp.length; i++) {
+            int time = company.get(i-1).time;
+            int pay = company.get(i-1).pay;
+            int suc = i + time;
+            max = dp[i];
+            if (suc <= n) {
+                dp[suc] = Math.max(dp[suc], max + pay);
 
-            if(i + time <= n) {
-                dp[i+time] = Math.max(dp[i+time], dp[i] + pay);
             }
         }
-        if(company.get(n-1).time == 1)
-            dp[n] += company.get(n).pay;
-        return dp[n-1];
+
+        return dp[n];
     }
 }
