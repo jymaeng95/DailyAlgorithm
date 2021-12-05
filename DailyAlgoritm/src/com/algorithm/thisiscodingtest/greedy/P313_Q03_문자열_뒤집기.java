@@ -2,7 +2,7 @@ package com.algorithm.thisiscodingtest.greedy;
 
 import java.io.*;
 
-public class P313_문자열_뒤집기 {
+public class P313_Q03_문자열_뒤집기 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
