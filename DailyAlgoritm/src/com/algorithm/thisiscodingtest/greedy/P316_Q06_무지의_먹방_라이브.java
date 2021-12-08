@@ -3,6 +3,7 @@ package com.algorithm.thisiscodingtest.greedy;
 import java.util.*;
 
 public class P316_Q06_무지의_먹방_라이브 {
+    //나중에 다시 풀기
     static class Food implements Comparable<Food> {
         private int index;
         private long time;
@@ -26,8 +27,8 @@ public class P316_Q06_무지의_먹방_라이브 {
         }
     }
     public static void main(String[] args) {
-        int[] food_times = {7,6,2,4,5};
-        long k = 19;
+        int[] food_times = {1,5,6,7};
+        long k = 8;
         int solution = solution(food_times, k);
         System.out.println(solution);
     }
@@ -40,19 +41,26 @@ public class P316_Q06_무지의_먹방_라이브 {
             queue.offer(new Food(i+1,food_times[i]));
         }
         long prev = 0;
+        long totalTime = 0;
         while(k >= queue.size()) {
             if (queue.isEmpty()) {
                 answer = -1;
                 break;
             }
             int size = queue.size();
-            Food food = queue.poll();
+            Food food = queue.peek();
             long next = food.getTime() - prev;
+            if(k < next * size) {
+                k %= size;
+                break;
+            }
             k -= next * size;
             prev = food.getTime();
+            queue.poll();
         }
         List<Food> foodList = new ArrayList<>(queue);
-        Collections.sort(foodList, Comparator.comparingInt(o -> o.getIndex()));
+        foodList.sort(Comparator.comparingInt(o -> o.getIndex()));
+
         if(!queue.isEmpty()) {
             answer = foodList.get((int)k).getIndex();
         }
