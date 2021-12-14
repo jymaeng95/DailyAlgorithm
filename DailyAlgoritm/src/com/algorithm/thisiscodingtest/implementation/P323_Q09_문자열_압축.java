@@ -2,7 +2,7 @@ package com.algorithm.thisiscodingtest.implementation;
 
 public class P323_Q09_문자열_압축 {
     public static void main(String[] args) {
-        String s = "abcabcdede";
+        String s = "aabbaccc";
         int rst = getZipStr(s);
         System.out.println("rst = " + rst);
 
@@ -15,9 +15,16 @@ public class P323_Q09_문자열_압축 {
 
             StringBuilder sb = new StringBuilder();
             String prev = s.substring(0,length);
+            String present = "";
             int count = 1;
             for(int i=length; i<s.length();i+=length) {
-                String present = s.substring(i,i+length);
+
+                if(i+length >= s.length()) {
+                    present = s.substring(i);
+                }
+                else {
+                    present = s.substring(i,i+length);
+                }
                 if(prev.equals(present)) {
                     count++;
                 }
