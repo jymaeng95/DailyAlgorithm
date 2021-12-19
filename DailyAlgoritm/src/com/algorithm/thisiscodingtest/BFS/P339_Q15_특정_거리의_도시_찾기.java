@@ -4,6 +4,7 @@ import java.io.*;
 import java.util.*;
 
 public class P339_Q15_특정_거리의_도시_찾기 {
+    private static  List<List<Integer>> road;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -16,8 +17,8 @@ public class P339_Q15_특정_거리의_도시_찾기 {
 
         int[] dist = new int[N + 1];
         Arrays.fill(dist, 300001);
-        List<List<Integer>> road = new ArrayList<>();
-//        int[][] roads = new int[N+1][N+1];
+        road = new ArrayList<>();
+        boolean[] visited = new boolean[N + 1];
         for (int i = 0; i <= N; i++) {
             road.add(new ArrayList<>());
         }
@@ -27,12 +28,10 @@ public class P339_Q15_특정_거리의_도시_찾기 {
             int fr = Integer.parseInt(st.nextToken());
             int to = Integer.parseInt(st.nextToken());
 
-//            roads[fr][to] = 1;
             road.get(fr).add(to);
         }
 
-        int[] rst = getMinDistanceCity(K, X, dist,road);
-//        int[] rst2 = getMinDist(K,X,dist,roads);
+        int[] rst = getMinDistanceCity(K, X, dist,visited);
         for (int r : rst) {
             bw.write(String.valueOf(r));
             bw.newLine();
@@ -42,43 +41,19 @@ public class P339_Q15_특정_거리의_도시_찾기 {
         bw.close();
     }
 
-    private static int[] getMinDist(int k, int x, int[] dist, int[][] roads) {
-        Queue<Integer> queue = new LinkedList<>();
-        queue.offer(x);
+    private static int[] getMinDistanceCity(int k, int x, int[] dist, boolean[] visited) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        pq.offer(x);
         dist[x] = 0;
-        while(!queue.isEmpty()) {
-            int city = queue.poll();
-            for(int i=1;i<roads.length;i++) {
-                if(roads[city][i] == 1) {
-                    if (dist[i] > dist[city] + 1) {
-                        dist[i] = dist[city] + 1;
-                    }
-
-                    queue.offer(i);
-                }
-            }
-        }
-        List<Integer> list = new ArrayList<>();
-        for (int i = 1; i < dist.length; i++) {
-            if (dist[i] == k)
-                list.add(i);
-        }
-        if (list.isEmpty())
-            list.add(-1);
-        return list.stream().mapToInt(Integer::intValue).toArray();
-    }
-
-    private static int[] getMinDistanceCity(int k, int x, int[] dist, List<List<Integer>> road) {
-        Queue<Integer> queue = new LinkedList<>();
-        queue.offer(x);
-        dist[x] = 0;
-        while (!queue.isEmpty()) {
-            int city = queue.poll();
+        while (!pq.isEmpty()) {
+            int city = pq.poll();
+            if(visited[city]) continue;
+            visited[city] = true;
             for (int next : road.get(city)) {
-                if (dist[next] > dist[city] + 1) {
+                if (!visited[next] && dist[next] > dist[city] + 1) {
                     dist[next] = dist[city] + 1;
+                    pq.offer(next);
                 }
-                queue.offer(next);
             }
         }
         List<Integer> list = new ArrayList<>();
