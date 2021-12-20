@@ -56,6 +56,7 @@ public class P339_Q15_특정_거리의_도시_찾기 {
                 }
             }
         }
+
         List<Integer> list = new ArrayList<>();
         for (int i = 1; i < dist.length; i++) {
             if (dist[i] == k)
