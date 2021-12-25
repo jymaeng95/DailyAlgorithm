@@ -69,43 +69,46 @@ public class P353_Q21_인구_이동 {
         int day = 0;
         while (true) {
             boolean move = false;
-            boolean[][] visited = new boolean[N][N];
+            int[][] visited = new int[N][N];
+            int num = 1;
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
-                    if (!visited[i][j]) {
-                        if (bfs(i, j, land, visited)) {
+                    if (visited[i][j] == 0) {
+                        if (bfs(i, j, land, visited,num)) {
+                            num++;
                             move = true;
-                            break;
                         }
                     }
                 }
-                if (move) break;
             }
-            if (!move) break;
+
+            // 더이상 안나눠 지는 경우
+            if(!move) break;
+
             day++;
         }
 
         return day;
     }
 
-    private static boolean bfs(int i, int j, int[][] land, boolean[][] visited) {
+    private static boolean bfs(int i, int j, int[][] land, int[][] visited, int num) {
         Queue<City> queue = new LinkedList<>();
         queue.offer(new City(i, j, land[i][j]));
+        boolean move = false;
         int count = 0;
         int people = 0;
-        boolean move = false;
         while (!queue.isEmpty()) {
             City city = queue.poll();
             int x = city.getX();
             int y = city.getY();
-            if (visited[x][y]) continue;
-            visited[x][y] = true;   // 도시 방문처리
+            if (visited[x][y] > 0) continue;
             people += city.getPeople();
-            count ++;   //도시 개수 카운트
+            visited[x][y] = num;   // 도시 방문처리
+            count++;
             for (int k = 0; k < 4; k++) {
                 int nx = x + DX[k];
                 int ny = y + DY[k];
-                if(checkBound(nx,ny) && !visited[nx][ny]) {
+                if(checkBound(nx,ny) && visited[nx][ny] == 0) {
                     int sub = Math.abs(land[x][y] - land[nx][ny]);
                     if(sub >= L && sub <= R) {
                         queue.offer(new City(nx,ny,land[nx][ny]));
@@ -113,18 +116,19 @@ public class P353_Q21_인구_이동 {
                     }
                 }
             }
-            if(!move) visited[x][y] = false;
-        }
-        if(move) {
-            for(int k=0;k<N;k++) {
-                for(int z=0;z<N;z++) {
-                    if(visited[k][z]) {
-                        land[k][z] = people / count;
-                    }
-                }
+            if(!move) {
+                visited[x][y] = 0;
+                return false;
             }
         }
 
+        for(int k=0;k<N;k++) {
+            for(int z=0;z<N;z++) {
+                if(visited[k][z] == num) {
+                    land[k][z] = people / count;
+                }
+            }
+        }
         return move;
     }
 
