@@ -43,10 +43,13 @@ public class Main_14891_톱니바퀴 {
             checkRotation(left, right,gear, rotation);
             rotation[gearNo -1] = true;
 
+            checkLeftRotation(gearNo, rotation, gear,left,right,direction);
             //왼쪽 체크
             for(int i=gearNo-1; i>0; i--) {
-                if(rotation[i-1])
+                if(rotation[i-1]) {
                     checkLeftRotation(i);
+                    direction
+                }
                 else break;
             }
 
@@ -61,6 +64,15 @@ public class Main_14891_톱니바퀴 {
 //            checkRotation(left, right, gearNo, rotation);
         }
     }
+
+    private static void checkLeftRotation(int gearNo, boolean[] rotation, int[][] gear, int[] left, int[] right, int direction) {
+        for(int i=gearNo-1; i>0;i--) {
+            if(rotation[i-1]) {
+                if(direction == 1)
+            }
+        }
+    }
+
     private static void checkRotation(int[] left, int[] right, int[][] gear,boolean[] rotation) {
         for(int i=0;i<3;i++) {
             if(gear[left[i]] == gear[right[i]]) {
