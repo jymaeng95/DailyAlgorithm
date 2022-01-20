@@ -55,6 +55,7 @@ public class Main_1753_최단경로 {
 
             if (distance[i] == INF) {
                 bw.write("INF");
+                bw.newLine();
                 continue;
             }
             bw.write(String.valueOf(distance[i]));
