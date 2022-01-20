@@ -74,7 +74,7 @@ public class Main_1753_최단경로 {
                 continue;
             visited[node.node] = true;
             for (Node nd : graph.get(node.node)) {
-                if (!visited[nd.node] && distance[nd.node] > distance[node.node] + nd.dist) {
+                if (distance[nd.node] > distance[node.node] + nd.dist) {
                     distance[nd.node] = distance[node.node] + nd.dist;
                     pq.offer(new Node(nd.node, distance[nd.node]));
                 }
