@@ -26,9 +26,9 @@ public class Main_1865_웜홀 {
 
     private static int V, E, W;
     private static int[] distance;
-    private static List<City> wormhole;
     private static final int INF = (int) 1e9;
     private static List<List<City>> cityMap;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int TC = Integer.parseInt(br.readLine());
@@ -43,35 +43,55 @@ public class Main_1865_웜홀 {
                 cityMap.add(new ArrayList<>());
             }
 
-            for (int i = 0; i < E+W; i++) {
+            for (int i = 0; i < E + W; i++) {
                 st = new StringTokenizer(br.readLine());
                 int start = Integer.parseInt(st.nextToken());
                 int end = Integer.parseInt(st.nextToken());
                 int dist = Integer.parseInt(st.nextToken());
 
-                if(i < E) {
+                if (i < E) {
                     cityMap.get(start).add(new City(end, dist));
                     cityMap.get(end).add(new City(start, dist));
-                }
-                else {
+                } else {
                     cityMap.get(start).add(new City(end, -dist));
                 }
             }
 
-            boolean possible = false;
-            distance = new int[V+1];
-            for (int i = 1; i <= V; i++) {
-                Arrays.fill(distance, INF);
-                boolean rst = getWormhole(i);
-                if(rst) continue;
-            }
-            if (possible) System.out.println("YES");
+            distance = new int[V + 1];
+
+            if (getWormhole()) System.out.println("YES");
             else System.out.println("NO");
         }
 
         br.close();
     }
 
-    private static boolean getWormhole(int i) {
+    private static boolean getWormhole() {
+        Arrays.fill(distance, INF);
+        distance[1] = 0;
+        for (int i = 1; i < V; i++) {
+            // 모든 Edge
+            for (int j = 1; j <= V; j++) {
+                for (City city : cityMap.get(j)) {
+                    int endCity = city.getEnd();
+                    int dist = city.getDist();
+                    if (distance[endCity] > distance[j] + dist) {
+                        distance[endCity] = distance[j] + dist;
+                    }
+                }
+            }
+        }
+
+        // Edge 개수
+        for (int i = 1; i <= V; i++) {
+            for (City city : cityMap.get(i)) {
+                int end = city.getEnd();
+                int dist = city.getDist();
+                if (distance[end] > distance[i] + dist) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
