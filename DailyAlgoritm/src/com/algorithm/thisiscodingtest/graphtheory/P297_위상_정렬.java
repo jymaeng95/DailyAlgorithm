@@ -51,6 +51,7 @@ public class P297_위상_정렬 {
         int i = 0;
         while(!queue.isEmpty()) {
             int vertex = queue.poll();
+
             rst[i] = vertex;
             i++;
             for(int v : graph.get(vertex)) {
