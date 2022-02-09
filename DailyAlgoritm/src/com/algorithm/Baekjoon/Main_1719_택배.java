@@ -3,26 +3,46 @@ package com.algorithm.Baekjoon;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main_1719_택배 {
+    static class Delivery implements  Comparable<Delivery>{
+        private int dest;
+        private int time;
+
+        public Delivery(int dest, int time) {
+            this.dest = dest;
+            this.time = time;
+        }
+
+        public int getDest() {
+            return dest;
+        }
+
+        public int getTime() {
+            return time;
+        }
+
+        @Override
+        public int compareTo(Delivery o) {
+            return Integer.compare(this.time, o.time);
+        }
+    }
     private static int N,M;
     private static final int INF = 1001;
+    private static List<List<Delivery>> graph;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        int[][] dist = new int[N+1][N+1];
-        for(int i=1;i<=N;i++) {
-            for(int j=1;j<=N;j++) {
-                if(i == j) dist[i][j] = 0;
-                else dist[i][j] = INF;
-            }
+        graph = new ArrayList<>();
+        for(int i=0;i<=N;i++) {
+            graph.add(new ArrayList<>());
         }
 
         char[][] point = new char[N+1][N+1];
+
         for(int i=1;i<=N;i++) {
             Arrays.fill(point[i], '-');
         }
@@ -31,12 +51,10 @@ public class Main_1719_택배 {
             int fr = Integer.parseInt(st.nextToken());
             int to = Integer.parseInt(st.nextToken());
             int time = Integer.parseInt(st.nextToken());
-            dist[fr][to] = time;
-            dist[to][fr] = time;
-            point[fr][to] = Character.forDigit(to,10);
-            point[to][fr] = Character.forDigit(fr,10);
+            graph.get(fr).add(new Delivery(to, time));
+            graph.get(to).add(new Delivery(fr, time));
         }
-        floydWarshall(dist,point);
+        dijkstra(point);
         for(int i=1;i<=N;i++) {
             for(int j=1;j<=N;j++) {
                 System.out.print(point[i][j]+ " ");
@@ -46,24 +64,44 @@ public class Main_1719_택배 {
         br.close();
     }
 
-    private static void floydWarshall(int[][] dist, char[][] point) {
+    private static void dijkstra(char[][] point) {
         for(int i=1;i<=N;i++) {
-            for(int j=1;j<=N;j++) {
-                for(int k=1;k<=N;k++) {
-                    if(j==k) continue;
-                    if(dist[j][k] > dist[j][i] + dist[i][k]) {
-                        dist[j][k] = dist[j][i] + dist[i][k];
-                        if(point[j][k] == '-')
-                            point[j][k] = Character.forDigit(i,10);
+            int[] dist = new int[N+1];
+            boolean[] visited = new boolean[N+1];
+            int[] parent = new int[N+1];
+            parent[i] = 0;
+            Arrays.fill(dist, INF);
+            PriorityQueue<Delivery> pq = new PriorityQueue<>();
+            pq.add(new Delivery(i,0));
+            dist[i] = 0;
+            while(!pq.isEmpty()) {
+                Delivery dv = pq.poll();
+                int city = dv.getDest();
+                if(visited[city]) continue;
+                visited[city] = true;
+                for(Delivery delivery: graph.get(city)) {
+                    int dest = delivery.getDest();
+                    int destTime = delivery.getTime();
+                    if(!visited[dest] && dist[dest] > dist[city]+ destTime) {
+                        dist[dest] = dist[city] + destTime;
+                        pq.add(new Delivery(dest,dist[dest]));
+                        parent[dest] = city;
                     }
                 }
             }
-        }
-        for(int i=1;i<=N;i++) {
             for(int j=1;j<=N;j++) {
-                System.out.print(dist[i][j]+ " ");
+                if(i == j) continue;
+                makePoint(i,j, point, parent, j);
             }
-            System.out.println();
         }
+    }
+
+    private static void makePoint(int start, int next, char[][] point, int[] parent, int end) {
+        if(parent[next] == start) {
+            point[start][end] = Character.forDigit(next, 10);
+            return;
+        }
+        makePoint(start, parent[next], point, parent, end);
+
     }
 }
