@@ -41,10 +41,10 @@ public class Main_1719_택배 {
             graph.add(new ArrayList<>());
         }
 
-        char[][] point = new char[N+1][N+1];
+        String [][] point = new String[N+1][N+1];
 
         for(int i=1;i<=N;i++) {
-            Arrays.fill(point[i], '-');
+            Arrays.fill(point[i], "-");
         }
         for(int i =0;i<M;i++){
             st = new StringTokenizer(br.readLine());
@@ -64,12 +64,14 @@ public class Main_1719_택배 {
         br.close();
     }
 
-    private static void dijkstra(char[][] point) {
+    private static void dijkstra(String[][] point) {
         for(int i=1;i<=N;i++) {
             int[] dist = new int[N+1];
             boolean[] visited = new boolean[N+1];
             int[] parent = new int[N+1];
-            parent[i] = 0;
+            for(int j=1;j<=N;j++) {
+                parent[j] = j;
+            }
             Arrays.fill(dist, INF);
             PriorityQueue<Delivery> pq = new PriorityQueue<>();
             pq.add(new Delivery(i,0));
@@ -96,9 +98,9 @@ public class Main_1719_택배 {
         }
     }
 
-    private static void makePoint(int start, int next, char[][] point, int[] parent, int end) {
+    private static void makePoint(int start, int next, String[][] point, int[] parent, int end) {
         if(parent[next] == start) {
-            point[start][end] = Character.forDigit(next, 10);
+            point[start][end] = String.valueOf(next);
             return;
         }
         makePoint(start, parent[next], point, parent, end);
