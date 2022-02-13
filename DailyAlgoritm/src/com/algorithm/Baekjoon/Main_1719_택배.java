@@ -104,6 +104,5 @@ public class Main_1719_택배 {
             return;
         }
         makePoint(start, parent[next], point, parent, end);
-
     }
 }
