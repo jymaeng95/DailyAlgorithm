@@ -57,6 +57,9 @@ public class Main_2206_벽_부수고_이동하기 {
         br.close();
     }
 
+    public Main_2206_벽_부수고_이동하기() {
+    }
+
     private static int getMinRoad(int n, int m, int[][] map) {
         boolean[][][] visited = new boolean[2][n][m];
         Queue<Point> queue = new LinkedList<>();
