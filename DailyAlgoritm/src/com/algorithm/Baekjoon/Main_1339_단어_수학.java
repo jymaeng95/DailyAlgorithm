@@ -3,17 +3,15 @@ package com.algorithm.Baekjoon;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Main_1339_단어_수학 {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
-        List<String> words = new ArrayList<>();
+        String[] words = new String[N];
         for(int loop =0; loop < N; loop++) {
-            words.add(br.readLine());
+            words[loop] = br.readLine();
         }
 
         int rst = getSum(words);
@@ -21,20 +19,26 @@ public class Main_1339_단어_수학 {
         br.close();
     }
 
-    private static int getSum(List<String> words) {
+    private static int getSum(String[] words) {
         int[] alphabet = new int[26];
+
         for(String word : words) {
             int digit = word.length() - 1;
+            // 알파벳 A 가 0번 인덱스, 먼저 나온 수부터 자릿수 -1씩 Loop
             for(char letter : word.toCharArray()) {
                 int index = letter - 'A';
                 alphabet[index] += (int) Math.pow(10,digit);
                 digit--;
             }
         }
+
+        // 정렬
         Arrays.sort(alphabet);
         int index = alphabet.length-1;
         int maxNumber = 9;
         int sum = 0;
+
+        // 자릿수의 값이 가장 높은 순서부터 차례로 숫자 부여
         while(maxNumber >= 0 &&  alphabet[index] > 0) {
             sum += alphabet[index] * maxNumber;
             maxNumber--;
