@@ -29,6 +29,7 @@ public class Main_2580_스도쿠 {
                 }
                 System.out.println();
             }
+            System.exit(0);
             return;
         }
         if(board[row][col] == 0){
@@ -58,8 +59,8 @@ public class Main_2580_스도쿠 {
         }
 
         // 3. 3*3비교
-        for (int oneRow = row / 3 * 3; oneRow < row / 3 * 3 + 2; oneRow++) {
-            for (int oneCol = col / 3 * 3; oneCol < col / 3 * 3 + 2; oneCol++) {
+        for (int oneRow = row / 3 * 3; oneRow <= row / 3 * 3 + 2; oneRow++) {
+            for (int oneCol = col / 3 * 3; oneCol <= col / 3 * 3 + 2; oneCol++) {
                 if (val == board[oneRow][oneCol]) return false;
             }
         }
