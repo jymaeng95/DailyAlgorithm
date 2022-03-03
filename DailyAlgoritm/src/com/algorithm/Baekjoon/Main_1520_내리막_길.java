@@ -6,23 +6,6 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main_1520_내리막_길 {
-    static class Point {
-        private int x;
-        private int y;
-
-        public Point(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-
-        public int getX() {
-            return x;
-        }
-
-        public int getY() {
-            return y;
-        }
-    }
     private static int N,M;
     private static int[][] map;
     private static final int[] DX = {0,0,-1,1};
@@ -40,34 +23,29 @@ public class Main_1520_내리막_길 {
             st = new StringTokenizer(br.readLine());
             for(int col = 0; col < M; col++) {
                 map[row][col] = Integer.parseInt(st.nextToken());
+                dp[row][col] = -1;
             }
         }
 
-        int rst = getPossible();
+        int rst = dfs(0,0);
         System.out.println(rst);
         br.close();
     }
 
-    private static int getPossible() {
-        boolean[][] visited = new boolean[N][M];
-        int count = dfs(0,0,visited);
-        return count;
-    }
 
-    private static int dfs(int x, int y, boolean[][] visited) {
+    private static int dfs(int x, int y) {
         if(x == N-1 && y == M-1 ) {
             return 1;
         }
 
-        if(dp[x][y] > 0) return dp[x][y];
+        if(dp[x][y] >= 0) return dp[x][y];
 
+        dp[x][y] = 0;
         for(int idx = 0; idx < 4; idx++) {
             int nextX = x + DX[idx];
             int nextY = y + DY[idx];
             if(checkBound(nextX, nextY) && map[x][y] > map[nextX][nextY]) {
-                visited[nextX][nextY] = true;
-                dp[x][y] += dfs(nextX, nextY, visited);
-                visited[nextX][nextY] = false;
+                dp[x][y] += dfs(nextX, nextY);
             }
         }
 
