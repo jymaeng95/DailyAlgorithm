@@ -36,6 +36,7 @@ public class Main_1707_이분_그래프 {
             }
 
             boolean rst = false;
+            // 모든 정점에 대해서
             for(int vertex = 1; vertex <= V; vertex++) {
                 if(colors[vertex] == 0) {
                     rst = isBipartiteGraph(vertex, RED);
