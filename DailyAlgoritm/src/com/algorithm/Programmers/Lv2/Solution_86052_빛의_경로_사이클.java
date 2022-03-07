@@ -71,20 +71,26 @@ public class Solution_86052_빛의_경로_사이클 {
             if(visited[curX][curY][curDir]) return count;
             visited[curX][curY][curDir] = true;
 
-            //노드 방향 확인
+            // 다음 노드 진입 방향 구하기
             Point next = nextPath(curX, curY, curDir);
-            //방향 확인 후 회전
+
+            // 다음 노드 큐에 추가
             queue.add(new Point(next.getRow(), next.getCol(), next.getDir()));
+
+            // 진입한 노드 갯수 증가
             count++;
         }
 
         return count;
     }
 
+    // 다음 노드 진입 방향 구하기
     private static Point nextPath(int curX, int curY, int curDir) {
         int nextRow = curX;
         int nextCol = curY;
         int nextDir = curDir;
+
+        // 현재 노드 진입 방향 별 다음 노드 진입 방향
         if((map[curX][curY].equals("S") && curDir ==0) || (map[curX][curY].equals("L") && curDir == 3) || (map[curX][curY].equals("R") && curDir == 2)) {
             nextRow = curX +1;
             nextDir = 0;
@@ -102,6 +108,7 @@ public class Solution_86052_빛의_경로_사이클 {
             nextDir = 3;
         }
 
+        // 다음 노드의 행 혹은 열이 범위 밖으로 벗어나는 경우 체크
         if(checkEndpoint(nextRow, nextCol)) {
             if(nextDir == 0) {
                 nextRow = 0;
