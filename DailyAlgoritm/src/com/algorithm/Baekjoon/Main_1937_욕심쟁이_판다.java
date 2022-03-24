@@ -52,39 +52,44 @@ public class Main_1937_욕심쟁이_판다 {
     private static final int[] DX = {0, 0, -1, 1};
     private static final int[] DY = {1, -1, 0, 0};
     private static int[][] dp;
+
     private static int pandasPosition(int n, int[][] forest) {
         count = 1;
         dp = new int[n][n];
         for (int row = 0; row < n; row++) {
             for (int col = 0; col < n; col++) {
-                if(dp[row][col] == 0) {
+                if (dp[row][col] == 0) {
                     movePandas(row, col, n, forest);
                 }
             }
         }
+//
+//        for(int row = 0; row < n; row++) {
+//            for (int col = 0; col < n; col++) {
+//                count = Math.max(dp[row][col],count);
+//            }
+//        }
         return count;
     }
 
     private static void movePandas(int row, int col, int n, int[][] forest) {
         Queue<Pandas> queue = new LinkedList<>();
         queue.add(new Pandas(row, col, 1));
-        dp[row][col] = Math.max(dp[row][col], )
+        dp[row][col] = 1;
         while (!queue.isEmpty()) {
             Pandas pandas = queue.poll();
             int curRow = pandas.getRow();
             int curCol = pandas.getCol();
             int curCount = pandas.getMove();
-            count = Math.max(count, curCount);
 
             for (int direction = 0; direction < 4; direction++) {
                 int nextRow = DX[direction] + curRow;
                 int nextCol = DY[direction] + curCol;
-                if (checkBound(nextRow, nextCol, n)) {
-                    if(dp[nextRow][nextCol] == 0) {
+                if (checkBound(nextRow, nextCol, n) && forest[nextRow][nextCol] > forest[curRow][curCol]) {
+                    if (dp[nextRow][nextCol] < curCount + 1) {
+                        dp[nextRow][nextCol] = Math.max(dp[nextRow][nextCol], curCount + 1);
                         queue.add(new Pandas(nextRow, nextCol, curCount + 1));
-                    }
-                    else {
-
+                        count = Math.max(dp[nextRow][nextCol], count);
                     }
                 }
             }
