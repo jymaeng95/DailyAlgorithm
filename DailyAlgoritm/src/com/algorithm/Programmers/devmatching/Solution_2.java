@@ -1,19 +1,46 @@
 package com.algorithm.Programmers.devmatching;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class Solution_2 {
     public static void main(String[] args) {
-        int[][] dist = {{0, 5, 2, 4, 1}, {5, 0, 3, 9, 6}, {2, 3, 0, 6, 3}, {4, 9, 6, 0, 3}, {1, 6, 3, 3, 0}};
+        int[][] dist = {{0, 5, 2, 4, 1},
+                        {5, 0, 3, 9, 6},
+                        {2, 3, 0, 6, 3},
+                        {4, 9, 6, 0, 3},
+                        {1, 6, 3, 3, 0}};
         int[][] rst = solution(dist);
-//        for (int[] x : rst) {
-//            for (int y : x) {
-//                System.out.println("y = " + y);
-//            }
-//            System.out.println();
-//        }
+        for (int[] x : rst) {
+            for (int y : x) {
+                System.out.println("y = " + y);
+            }
+            System.out.println();
+        }
+    }
+
+    private static int[][] solution(int[][] dist) {
+        int max = 0;
+        int maxRow = 0;
+        for (int row = 0; row < dist.length; row++) {
+            for (int col = row+1; col < dist.length; col++) {
+                if(max < dist[row][col]) {
+                    maxRow = row;
+                    max = dist[row][col];
+                }
+            }
+        }
+
+        Point[] answer = new Point[dist.length];
+        for(int col =0; col < dist.length; col++) {
+            answer[col] = new Point(col, dist[maxRow][col]);
+        }
+        Arrays.parallelSort(answer);
+        int[][] rst = new int[2][dist.length];
+        for(int col = 0; col < dist.length; col++) {
+            rst[0][col] = answer[col].getDot();
+            rst[1][col] = answer[dist.length-col-1].getDot();
+        }
+        return rst;
     }
 
     static class Point implements Comparable<Point> {
@@ -37,54 +64,5 @@ public class Solution_2 {
         public int compareTo(Point o) {
             return Integer.compare(this.distance, o.distance);
         }
-    }
-
-    public static int[][] solution(int[][] dist) {
-        List<List<Integer>> answer = new ArrayList<>();
-        int answerIndex = 0;
-        for (int row = 0; row < dist.length; row++) {
-            int[] length = new int[100000001];
-            Point[] index = new Point[dist.length];
-            Arrays.fill(length, -1);
-            length[row] = 0;
-            for (int col = 0; col < dist.length; col++) {
-                // 0-1 =5 , 0-2 = 2, 0-3 = 4, 0-4 = 1
-                int distance = dist[row][col];
-
-                //현재 위치 row로부터 떨어진 거리에 점 넣기
-                length[distance] = col;
-
-                //현재 위치 row로 부터 떨어진 col 점의 위치
-                index[col] = new Point(col, distance);
-            }
-
-            boolean rst = true;
-            for (int next = 0; next < dist.length; next++) {
-                if (Math.abs((index[row].getDistance() - index[next].getDistance())) != dist[row][next]) {
-                    rst = false;
-                    break;
-                }
-            }
-
-            if (rst) {
-                answer.add(new ArrayList<>());
-                Arrays.sort(index);
-                for (Point point : index) {
-                    System.out.println("point = " + point.getDot());
-                    answer.get(answerIndex).add(point.getDot());
-                }
-                answerIndex++;
-            }
-        }
-
-        int[][] rst = new int[answer.size()][dist.length];
-        for (int size = 0; size < answer.size(); size++) {
-            int index = 0;
-            for (int dot : answer.get(size)) {
-                rst[size][index] = dot;
-                index++;
-            }
-        }
-        return rst;
     }
 }
