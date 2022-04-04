@@ -64,6 +64,7 @@ public class Main_16724_피리_부는_사나이 {
 
         // zone 방향 체크
         Move next = checkDirection(row, col, zone);
+
         if(!visited[next.getRow()][next.getCol()]) {
             peopleMove(next.getRow(), next.getCol(), zone);
         }
