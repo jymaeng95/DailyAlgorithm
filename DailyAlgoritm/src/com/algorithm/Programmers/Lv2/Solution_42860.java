@@ -1,53 +1,66 @@
 package com.algorithm.Programmers.Lv2;
 
-import java.util.Arrays;
-import java.util.Collections;
-
 //프로그래머스 LV2(조이스틱)
 public class Solution_42860 {
 
     public static void main(String[] args) {
 
         //M 12
-        solution("JEROEN");
-        solution("JAZ");
-        solution("JAN");
-        solution("AAA");
-        solution("ZZZZ");
-        solution("AGENDA");
-        solution("BBBAAAB");
-        solution("ABABAAAAABA");
+//        solution("JEROEN");
+//        solution("JAZ");
+//        solution("JAN");
+//        solution("AAA");
+//        solution("ZZZZ");
+//        solution("AGENDA");
+//        solution("BBBAAAB");
+        solution("ABAAAAAAAAABB");
 
     }
 
     public static int solution(String name) {
+        return Math.min(minCountForward(name), minCountBackward(name));
+    }
+
+    private static int minCountBackward(String name) {
         int answer = 0;
-        StringBuilder sb = new StringBuilder("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-        StringBuilder front = new StringBuilder("ABCDEFGHIJKLMN");
-        StringBuilder last = new StringBuilder("AZYXWVUTSRQPON");
-        StringBuilder alpha = new StringBuilder();
-        String[] sortStr = name.split("");
-        Arrays.sort(sortStr, Collections.reverseOrder());
-        for(String str : sortStr) {
-            if (!str.equals("A"))
-                alpha.append(str);
-        }
-        int i=0;
+        StringBuilder sb = new StringBuilder();
+        sb.append(name.substring(1, name.length())).append(name.charAt(0));
+        sb = sb.reverse();
 
-        while(alpha.length()>0){
-            char alphabet = alpha.charAt(i);
-            if(sb.indexOf(String.valueOf(alphabet)) > 13 ){
-                answer += last.indexOf(String.valueOf(alphabet));
-
-            }else{
-                answer += front.indexOf(String.valueOf(alphabet));
+        for (char letter : sb.toString().toCharArray()) {
+            if (letter != 'A') {
+                // 아래 이동 혹은 위로 이동
+                answer += Math.min(letter - 'A', 90 - letter + 1);
             }
-            i++;
-            if(i==alpha.length())
-                break ;
+            // 이동
             answer++;
         }
-        System.out.println(answer);
-        return answer;
+        answer -= getLastAcount(sb.toString());
+        System.out.println(answer -1);
+        return answer - 1;
+    }
+
+    private static int minCountForward(String name) {
+        int answer = 0;
+        for (char letter : name.toCharArray()) {
+            if (letter != 'A') {
+                // 아래 이동 혹은 위로 이동
+                answer += Math.min(letter - 'A', 90 - letter + 1);
+            }
+            answer++;
+        }
+
+        answer -= getLastAcount(name);
+        System.out.println(answer -1);
+        return answer - 1;
+    }
+
+    private static int getLastAcount(String name) {
+        int count = 0;
+        for(int index = name.length()-1; index >= 0; index--) {
+            if(name.charAt(index) != 'A') break;
+            count++;
+        }
+        return count;
     }
 }
