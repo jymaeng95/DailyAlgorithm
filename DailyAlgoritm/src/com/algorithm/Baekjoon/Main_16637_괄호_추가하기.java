@@ -27,7 +27,7 @@ public class Main_16637_괄호_추가하기 {
     private static int getMaxResult(int n, int[] num, char[] op) {
         result = Integer.MIN_VALUE;
 
-        makeExp(0, 0, num, op);
+        makeExp(num[0], 0, num, op);
         return result;
     }
 
@@ -41,16 +41,18 @@ public class Main_16637_괄호_추가하기 {
         }
 
         // 괄호 계산 하는 경우
-        int rst = calc(num[index], op[index], num[index + 1]);
-        makeExp(rst, index + 2, num, op);
-
+        if (index + 2 < num.length) {
+            int rst = calc(num[index + 1], op[index + 1], num[index + 2]);
+            makeExp(calc(output, op[index], rst), index + 2, num, op);
+        }
         // 괄호 계산 하지 않는 경우
-
+        int rst = calc(output, op[index], num[index+1]);
+        makeExp(rst, index + 1, num ,op);
     }
 
     private static int calc(int prev, char operation, int post) {
         if (operation == '+') return prev + post;
         if (operation == '-') return prev - post;
-        if (operation == '*') return prev * post;
+        return prev * post;
     }
 }
