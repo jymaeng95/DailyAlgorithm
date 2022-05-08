@@ -28,24 +28,38 @@ public class Main_1967_트리의_지름 {
         }
 
         int rst = getTreeLength(N, tree);
+        System.out.println(rst);
         br.close();
     }
 
-    private static int length;
 
     private static int getTreeLength(int size, Map<Integer, List<Node>> tree) {
-        length = 0;
+        startNode = maxStartLength = 0;
+        boolean[] visited = new boolean[size + 1];
 
-        for (int node = 1; node <= size; node++) {
-            boolean[] visited = new boolean[size + 1];
-            dfs(node, tree, visited);
-        }
+        // 루트 노드부터 가장 먼 노드 찾기
+        getMaxLength(1, visited, tree,  0);
 
-        return length;
+        // 가장 먼 노드로 다시 DFS
+        visited = new boolean[size + 1];
+        maxStartLength = 0;     // 최장 지름 길이 초기화
+        getMaxLength(startNode, visited, tree, 0);
+        return maxStartLength;
     }
 
-    private static void dfs(int node, Map<Integer, List<Node>> tree, boolean[] visited) {
-        // DFS 구현
+
+    private static int startNode, maxStartLength;
+    private static void getMaxLength(int node, boolean[] visited, Map<Integer, List<Node>> tree, int weight) {
+        visited[node] = true;
+        for (Node next : tree.get(node)) {
+            if (!visited[next.getNode()]) {
+                if (next.getWeight() + weight > maxStartLength) {
+                    startNode = next.getNode();
+                    maxStartLength = next.getWeight() + weight;
+                }
+                getMaxLength(next.getNode(), visited, tree, weight + next.getWeight());
+            }
+        }
     }
 
     static class Node {
