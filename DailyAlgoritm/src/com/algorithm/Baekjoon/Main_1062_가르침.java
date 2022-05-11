@@ -34,7 +34,7 @@ public class Main_1062_가르침 {
         // a,n,t,i,c를 못배우는 경우 0개
         if(K < 5) return 0;
 
-        count = 0;
+        count = 0; // 배울수 있는 단어 개수
         boolean[] teachingAlphabet = new boolean[26];       // 가르칠 알파벳 체크 배열
         // a,n,t,i,c는 무조건 배워야하므로 true
         teachingAlphabet[0] = teachingAlphabet[2] = teachingAlphabet[8] = teachingAlphabet[13] = teachingAlphabet[19] = true;
