@@ -41,6 +41,26 @@ public class Main_9934_완전_이진_트리 {
             this.right = right;
         }
     }
+
+    static class City implements Comparable<City> {
+        private int inputPath;
+        private int makePath;
+
+        public City(int inputPath, int makePath) {
+            this.inputPath = inputPath;
+            this.makePath = makePath;
+        }
+
+        public int getInputPath() {
+            return inputPath;
+        }
+
+        @Override
+        public int compareTo(City o) {
+            return Integer.compare(this.makePath, o.makePath);
+        }
+    }
+
     private static Stack<Integer> path, makePath;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -105,24 +125,5 @@ public class Main_9934_완전_이진_트리 {
         inorder(tree.get(node).getLeft(), tree);
         makePath.push(node);
         inorder(tree.get(node).getRight(), tree);
-    }
-
-    static class City implements Comparable<City> {
-        private int inputPath;
-        private int makePath;
-
-        public City(int inputPath, int makePath) {
-            this.inputPath = inputPath;
-            this.makePath = makePath;
-        }
-
-        public int getInputPath() {
-            return inputPath;
-        }
-
-        @Override
-        public int compareTo(City o) {
-            return Integer.compare(this.makePath, o.makePath);
-        }
     }
 }
