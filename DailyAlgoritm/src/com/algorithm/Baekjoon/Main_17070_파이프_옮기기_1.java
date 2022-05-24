@@ -3,8 +3,6 @@ package com.algorithm.Baekjoon;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.StringTokenizer;
 
 public class Main_17070_파이프_옮기기_1 {
@@ -13,120 +11,74 @@ public class Main_17070_파이프_옮기기_1 {
 
         int N = Integer.parseInt(br.readLine());
         int[][] house = new int[N][N];
-
-        for(int row = 0; row < N; row ++) {
+        for (int row = 0; row < N; row++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
-            for (int col = 0; col < N; col ++) {
+            for (int col = 0; col < N; col++) {
                 house[row][col] = Integer.parseInt(st.nextToken());
             }
         }
 
-        int rst = moveCount(N, house);
+        int rst = movePipe(N, house);
         System.out.println(rst);
-
         br.close();
+    }
+
+    private static final int HORIZON = 0, VERTICAL = 1,  CROSS = 2;
+
+    private static int movePipe(int n, int[][] house) {
+        int[][][] dp = new int[n][n][3];
+        dp[0][0][0] = dp[0][1][0] = 1;
+
+        for (int row = 0; row < n; row++) {
+            for (int col = 0; col < n; col++) {
+                // 첫번째는 파이프가 놓여 있기 때문에 첫번째 행은 1부터 시작
+                if(row == 0 && col == 0) continue;
+                // 가로
+                if (checkBound(HORIZON, row, col, house, n)) {
+                    int nextRow = row + DX[HORIZON];
+                    int nextCol = col + DY[HORIZON];
+                    // 이전에 대각선이나 가로로 들어온 경우에만 현재 파이프가 가로로 들어올 수 있음
+                    dp[nextRow][nextCol][HORIZON] = dp[row][col][HORIZON] + dp[row][col][CROSS];
+                }
+                // 세로
+                if (checkBound(VERTICAL, row, col, house, n)) {
+                    int nextRow = row + DX[VERTICAL];
+                    int nextCol = col + DY[VERTICAL];
+                    // 이전에 대가건이나 세로로 들어온 경우에만 현재 파이프가 세로로 들어오는 것이 가능
+                    dp[nextRow][nextCol][VERTICAL] = dp[row][col][VERTICAL] + dp[row][col][CROSS];
+                }
+                // 대각선
+                if (checkBound(CROSS, row, col, house, n)) {
+                    // 모든 방향에서 들어오는 것이 가능
+                    int nextRow = row + DX[CROSS];
+                    int nextCol = col + DY[CROSS];
+                    dp[nextRow][nextCol][CROSS] = dp[row][col][HORIZON] + dp[row][col][VERTICAL] + dp[row][col][CROSS];
+                }
+            }
+        }
+
+        return dp[n-1][n-1][HORIZON] + dp[n-1][n-1][VERTICAL] + dp[n-1][n-1][CROSS];
     }
 
     private static final int[] DX = {0, 1, 1};
     private static final int[] DY = {1, 0, 1};
-    private static int moveCount(int n, int[][] house) {
-        /**
-         * 1. BFS로 3가지 타입에 대해 모두 탐색 (타입 별로 경로 판단 필요하므로 3차원 visited배열)
-         * 2. 다음 엔드포인트는 dp[현재 엔드 포인트] + dp[다음 엔드 포인트]
-         */
 
-        int[][] dp = new int[n][n];
-        dp[0][0] = dp[0][1] = 1;
-        boolean[][][] visited = new boolean[3][n][n];
-        Queue<Pipe> queue = new LinkedList<>();
-        queue.offer(new Pipe(0, 0, 1, 1));
+    private static boolean checkBound(int type, int row, int col, int[][] house, int n) {
+        if (type != CROSS) {
+            int nextRow = row + DX[type];
+            int nextCol = col + DY[type];
 
-        while(!queue.isEmpty()) {
-            Pipe curPipe = queue.poll();
-
-
-            movePipe(curPipe, visited, dp, house, queue);
+            return nextRow >= 0 && nextRow < n && nextCol >= 0 && nextCol < n && house[nextRow][nextCol] != 1;
         }
 
-        return dp[n - 1][n - 1];
-    }
+        // 대각선 이동 경우 범위 판단
+        for (int direction = 0; direction < 3; direction++) {
+            int nextRow = row + DX[direction];
+            int nextCol = col + DY[direction];
 
-    private static void movePipe(Pipe curPipe, boolean[][][] visited, int[][] dp, int[][] house, Queue<Pipe> queue) {
-        int curType = curPipe.getType();
-        int curRow = curPipe.getEndRow();
-        int curCol = curPipe.getEndCol();
-        int curCount = curPipe.getCount();
-
-        if(curType == 0 || curType == 2) {
-            int nextCol = curCol + 1;
-            if(checkBound(0, curRow, curCol, house) && !visited[0][curRow][nextCol]) {
-                visited[0][curRow][nextCol] = true;
-                dp[curRow][nextCol] = Math.max(dp[curRow][nextCol], curCount);
-                queue.add(new Pipe(0,curRow, nextCol, curCount));
-            }
-        }
-        if(curType == 1 || curType == 2) {
-            int nextRow = curRow + 1;
-            if(checkBound(1, curRow, curCol, house) && !visited[1][nextRow][curCol]) {
-                visited[1][nextRow][curCol] = true;
-                dp[nextRow][curCol] = Math.max(dp[nextRow][curCol], curCount);
-                queue.add(new Pipe(1,nextRow, curCol, curCount));
-            }
-        }
-
-        int nextRow = curRow + 1;
-        int nextCol = curCol + 1;
-        if(checkBound(2, curRow, curCol, house) && !visited[2][nextRow][nextCol]) {
-            visited[2][nextRow][nextCol] = true;
-            dp[nextRow][nextCol] = Math.max(dp[nextRow][nextCol], curCount);
-            queue.add(new Pipe(2, nextRow, nextCol, curCount));
-        }
-
-    }
-
-    private static boolean checkBound(int type, int curRow, int curCol, int[][] house) {
-        if(type == 0 || type == 1) {
-            int nextRow = curRow + DX[type];
-            int nextCol = curCol + DY[type];
-            return nextRow >= 0 && nextRow < house.length && nextCol >= 0 && nextCol < house.length && house[nextRow][nextCol] != 1;
-        }
-
-        for(int direction = 0; direction < 3; direction++) {
-            int nextRow = curRow + DX[direction];
-            int nextCol = curCol + DY[direction];
-
-            if(nextRow < 0 || nextRow >= house.length || nextCol < 0 || nextCol >= house.length || house[nextRow][nextCol] == 1) return false;
+            if (nextRow < 0 || nextRow >= n || nextCol < 0 || nextCol >= n || house[nextRow][nextCol] == 1)
+                return false;
         }
         return true;
-    }
-
-    static class Pipe {
-        private int type;
-        private int endRow;
-        private int endCol;
-        private int count;
-
-        public Pipe(int type, int endRow, int endCol, int count) {
-            this.type = type;
-            this.endRow = endRow;
-            this.endCol = endCol;
-            this.count = count;
-        }
-
-        public int getType() {
-            return type;
-        }
-
-        public int getEndRow() {
-            return endRow;
-        }
-
-        public int getEndCol() {
-            return endCol;
-        }
-
-        public int getCount() {
-            return count;
-        }
     }
 }

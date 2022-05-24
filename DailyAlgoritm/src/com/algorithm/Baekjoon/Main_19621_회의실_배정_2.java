@@ -31,12 +31,14 @@ public class Main_19621_회의실_배정_2 {
     private static int getMaxHeadcount(int n, List<Room> roomList) {
         headcount = 0;
 
+        // n이 최대 25이므로 dfs를 이용한 완전 탐색 가능
         dfs(0, roomList, 0, n);
 
         return headcount;
     }
 
     private static void dfs(int depth, List<Room> roomList, int count, int n) {
+        // List의 Max 인덱스가 n-1까지 이므로 이 이상이 되는 경우 모든 회의가 끝난 경우
         if(depth > n-1) {
             headcount = Math.max(headcount, count);
             return;
