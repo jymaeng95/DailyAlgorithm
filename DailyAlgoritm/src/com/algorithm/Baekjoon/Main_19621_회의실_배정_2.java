@@ -44,14 +44,25 @@ public class Main_19621_회의실_배정_2 {
             return;
         }
 
-        // 현재 회의 참여하는 경우 다음 회의 참여 못함
+        // 현재 회의 참여하는 경우 다음 회의 참여 못함 (K+1은 참여못하면 K+2)
+        /**
+         * depth + 2 => k+2
+         * roomList 회의담은 배열
+         * count + roomList.get(depth) 현재까지의 인원수 + 현재회의 참가한 경우(인원수)
+         */
         dfs(depth + 2, roomList, count + roomList.get(depth).getHeadcount(), n);
 
-        // 현재 회의 참여하지 않는 경우 다음 회의 참여
+        // 현재 회의 참여하지 않는 경우 다음 회의 참여 (K+1은 참여)
+        /**
+         * depth + 1 => K +1
+         * roomList 동일
+         * count => 현재 회의에 참여안했으니까 현재 회의의 인원수를 더해줄 필요가 없음 !
+         * 결국 count는 현재까지의 최대 인원 수
+         */
         dfs(depth + 1, roomList, count, n);
     }
 
-    static class Room {
+    static class Room implements Comparable<Room>{
         private int start;
         private int end;
         private int headcount;
@@ -72,6 +83,11 @@ public class Main_19621_회의실_배정_2 {
 
         public int getHeadcount() {
             return headcount;
+        }
+
+        @Override
+        public int compareTo(Room o) {
+            return Integer.compare(this.start, o.start);
         }
     }
 }
