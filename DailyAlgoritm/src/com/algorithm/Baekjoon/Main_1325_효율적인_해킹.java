@@ -31,17 +31,20 @@ public class Main_1325_효율적인_해킹 {
         br.close();
     }
 
-    private static int maxCount;
     private static StringBuilder sb;
     private static int[] hacking;
     private static String getHackingComputerCount(int n, int m) {
-        maxCount = 0;
         sb = new StringBuilder();
         hacking = new int[n + 1];
         for(int computer = 1; computer <= n ; computer++) {
 //          hacking[computer] = hackingComputer(computer, n);
             boolean[] visited = new boolean[n + 1];
             hackingComputer(computer, computer, visited);
+        }
+
+        int maxCount = 0;
+        for (int count : hacking) {
+            maxCount = Math.max(count, maxCount);
         }
 
         for(int computer = 1; computer <= n; computer++) {
@@ -68,7 +71,7 @@ public class Main_1325_효율적인_해킹 {
                 }
             }
         }
-        maxCount = Math.max(maxCount, count);
+//        maxCount = Math.max(maxCount, count);
         return count;
     }
     //dfs
@@ -78,7 +81,6 @@ public class Main_1325_효율적인_해킹 {
                 visited[next] = true;
                 hackingComputer(start, next, visited);
                 hacking[start]++;
-                maxCount = Math.max(maxCount, hacking[start]);
             }
         }
     }
