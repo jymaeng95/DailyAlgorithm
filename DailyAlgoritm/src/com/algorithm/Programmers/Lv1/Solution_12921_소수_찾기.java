@@ -2,7 +2,7 @@ package com.algorithm.Programmers.Lv1;
 
 public class Solution_12921_소수_찾기 {
     public static void main(String[] args) {
-        int solution = solution(10);
+        int solution = solution(100000000);
         System.out.println("solution = " + solution);
     }
 
