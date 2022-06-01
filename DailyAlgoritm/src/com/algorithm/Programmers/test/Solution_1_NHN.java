@@ -23,7 +23,7 @@ public class Solution_1_NHN {
 
         // 각 라운드 별 판단
         boolean[] prevRoundPlayer1 = new boolean[53];
-        boolean[] prevRoundPlayer2 = new boolean[52];
+        boolean[] prevRoundPlayer2 = new boolean[53];
         for(int round = 0; round < cards1.length; round++) {
             Set<Integer> curRoundCardSet = new HashSet<>();
             int errCountPlayer1 = 0;
