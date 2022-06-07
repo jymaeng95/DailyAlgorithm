@@ -17,15 +17,12 @@ public class Main_1414_불우이웃돕기 {
             computers.add(new ArrayList<>());
         }
 
-        // 알파벳 변환
-        Map<Character, Integer> alphaMap = alphaMap();
-
         // 간선 정보 넣기
         int totalLength = 0;
         for(int computerA = 1; computerA <= N; computerA++) {
             String lengthInfo = br.readLine();
             for(int computerB = 1; computerB <= N; computerB++) {
-                int length = alphaMap.get(lengthInfo.charAt(computerB - 1));
+                int length = convertAlpha(lengthInfo.charAt(computerB - 1));
 
                 computers.get(computerA).add(new Computer(computerB, length));
                 computers.get(computerB).add(new Computer(computerA, length));
@@ -39,6 +36,12 @@ public class Main_1414_불우이웃돕기 {
         System.out.println(rst);
 
         br.close();
+    }
+
+    private static int convertAlpha(char alphabet) {
+        if(Character.isLowerCase(alphabet)) return alphabet - 'a' + 1;
+        else if(Character.isUpperCase(alphabet)) return alphabet - 'A' + 27;
+        return 0;
     }
 
     private static int getMaxLanLength(int n, int totalLength) {
@@ -84,20 +87,6 @@ public class Main_1414_불우이웃돕기 {
         return totalLength - lanLength;
     }
 
-    private static Map<Character, Integer> alphaMap() {
-        Map<Character, Integer> map = new HashMap<>();
-
-        String alphabet = "0abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        int index  = 0;
-
-        for (char alpha : alphabet.toCharArray()) {
-            map.put(alpha, index);
-
-            index++;
-        }
-
-        return map;
-    }
     static class Computer implements Comparable<Computer> {
         private int computer;
         private int length;
