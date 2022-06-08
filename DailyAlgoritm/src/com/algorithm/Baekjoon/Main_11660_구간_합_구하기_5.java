@@ -42,7 +42,7 @@ public class Main_11660_구간_합_구하기_5 {
         // 행에 대하여 누적합
         for (int row = 1; row <= n; row++) {
             for (int col = 1; col <= n; col++) {
-                sum[row][col] = sum[row][col-1] + num[row][col];
+                sum[row][col] = sum[row][col - 1] + num[row][col];
             }
         }
 
