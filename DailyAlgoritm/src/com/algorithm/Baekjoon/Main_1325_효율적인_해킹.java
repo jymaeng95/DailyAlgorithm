@@ -1,8 +1,6 @@
 package com.algorithm.Baekjoon;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.*;
 
 public class Main_1325_효율적인_해킹 {
@@ -27,7 +25,9 @@ public class Main_1325_효율적인_해킹 {
         }
 
         String rst = getHackingComputerCount(N, M);
-        System.out.println(rst);
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        bw.write(rst);
+        bw.flush();
         br.close();
     }
 
