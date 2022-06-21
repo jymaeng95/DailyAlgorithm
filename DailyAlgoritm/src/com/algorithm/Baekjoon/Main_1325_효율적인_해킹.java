@@ -39,6 +39,7 @@ public class Main_1325_효율적인_해킹 {
         for(int computer = 1; computer <= n ; computer++) {
 //          hacking[computer] = hackingComputer(computer, n);
             boolean[] visited = new boolean[n + 1];
+            visited[computer] = true;
             hackingComputer(computer, computer, visited);
         }
 
@@ -79,8 +80,8 @@ public class Main_1325_효율적인_해킹 {
         for (int next : graph.get(computer)) {
             if(!visited[next]) {
                 visited[next] = true;
-                hackingComputer(start, next, visited);
                 hacking[start]++;
+                hackingComputer(start, next, visited);
             }
         }
     }
