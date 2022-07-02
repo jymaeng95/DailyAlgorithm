@@ -29,29 +29,32 @@ public class Main_15684_사다리_조작 {
             ladder[height][start + 1] = LEFT;
         }
 
-        ladderCount = Integer.MAX_VALUE;
-        manipulateLadder(ladder, 0);
 
-        if(ladderCount == Integer.MAX_VALUE) ladderCount = -1;
-        System.out.println(ladderCount);
+        finish = false;
+        for (int count = 0; count <= 3; count++) {
+            ladderCount = count;
+            manipulateLadder(ladder, 0);
+            if(finish) break;
+        }
+
+        System.out.println(finish ? ladderCount : -1);
 
         br.close();
     }
 
+    private static boolean finish;
     private static void manipulateLadder(int[][] ladder, int count) {
-        if(count > 3) return;
-
-        // 사다리가 끝까지 자기 자신에 도착하는지 확인
-        if (reachLadder(ladder)) {
-            ladderCount = Math.min(ladderCount, count);
-
+        if(finish) return;
+        if(count == ladderCount) {
+            if(reachLadder(ladder)) finish = true;
             return;
         }
 
         for (int height = 1; height <= H; height++) {
             // 마지막에서 오른쪽으로 놓는 경우는 없으므로
             for (int col = 1; col < N; col++) {
-                if (ladder[height][col - 1] == 0 && ladder[height][col + 1] == 0) {
+                // 왼쪽 0, 오른쪽 0, 현재 0인 경우만 사다리 조작 가능
+                if (ladder[height][col] == 0 && ladder[height][col + 1] == 0 ) {
                     ladder[height][col] = RIGHT;
                     ladder[height][col + 1] = LEFT;
                     manipulateLadder(ladder, count + 1);
@@ -66,14 +69,24 @@ public class Main_15684_사다리_조작 {
         for (int col = 1; col <= N; col++) {
             int pos = col;
             for (int height = 1; height <= H; height++) {
-                if (ladder[height][pos] != 0) {
-                    if (ladder[height][pos] == RIGHT) pos += 1;
-                    else pos -= 1;
-                }
+                if(ladder[height][pos] == RIGHT) pos++;
+                else if(ladder[height][pos] == LEFT) pos--;
             }
-            // 자신의 시작 위치에 도착 안하는 경우
-            if (pos != col) return false;
+            if(pos != col) return false;
         }
+
         return true;
+    }
+
+    private static boolean reachLadder2(int[][] ladder, int start, int height, int end) {
+        // 높이가 넘어가면 체크
+        if (height > H)
+            return start == end;
+
+
+        // 사다리 체크
+        if (ladder[height][start] == RIGHT) return reachLadder2(ladder, start + 1, height + 1, end);
+        else if (ladder[height][start] == LEFT) return reachLadder2(ladder, start - 1, height + 1, end);
+        else return reachLadder2(ladder, start, height + 1, end);
     }
 }
