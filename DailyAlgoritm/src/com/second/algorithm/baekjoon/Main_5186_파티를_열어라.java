@@ -24,6 +24,7 @@ public class Main_5186_파티를_열어라 {
                 int location = Integer.parseInt(st.nextToken());
                 String drunk = st.nextToken();
 
+                // 운전할 수 있는 최대 인원을 구해놓는다.
                 if(drunk.equals("S")) driver++;
 
                 friends.add(new Friend(location, drunk));
@@ -53,9 +54,8 @@ public class Main_5186_파티를_열어라 {
         PriorityQueue<Car> carQueue = new PriorityQueue<>(cars);
         Collections.sort(friends);
 
-        // 차에 태울 수 있는 인원 배열
-        int[] available = new int[L+1];
-        boolean[] ride = new boolean[N];
+        int[] available = new int[L+1];     // 차에 태울 수 있는 인원 배열
+        boolean[] ride = new boolean[N];    // 친구들이 탔는지 안탔는지 판단하는 배열
 
         int rideDriver = 0;
         while(!carQueue.isEmpty()) {
@@ -63,9 +63,9 @@ public class Main_5186_파티를_열어라 {
             // 운전자만 먼저 태울수 있는 만큼 넣어주기
             for (int number = 0; number < driver; number++) {
                 if(car.getLocation() == friends.get(number).getLocation() && !ride[number]) {
-                    available[car.getLocation()] += car.getAvailable() - 1;
+                    available[car.getLocation()] += car.getAvailable() - 1; // 위치별 운전자 제외하고 자동차에 탈 수 있는 인원수 추가
                     ride[number] = true;
-                    rideDriver++;
+                    rideDriver++;       // 운전하는 친구들 카운팅
                     break;
                 }
             }
@@ -74,11 +74,12 @@ public class Main_5186_파티를_열어라 {
         int count = 0;
         for (int number = 0; number < friends.size(); number++) {
             Friend friend = friends.get(number);
-            if(available[friend.getLocation()] > 0 && !ride[number] ) available[friend.getLocation()]--;
+            if(available[friend.getLocation()] > 0 && !ride[number] ) available[friend.getLocation()]--;    // 자리가 남았고, 아직 차에 안탄 친구면 태우기
             else count++;
-
         }
 
+        // 운전자 친구들은 이미 ride 배열이 true이므로 위에 친구들을 태울 때 운전자도 같이 카운팅된다.
+        // 따라서, 운전자 친구들 만큼 빼준다.
         return count - rideDriver;
     }
 

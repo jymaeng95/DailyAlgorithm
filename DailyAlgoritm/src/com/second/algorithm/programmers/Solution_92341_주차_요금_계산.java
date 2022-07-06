@@ -35,22 +35,25 @@ public class Solution_92341_주차_요금_계산 {
         int unitMinute = fees[2];
         int unitFee = fees[3];
 
+        // 자동차 번호가 낮은순 정렬
         List<String> carNumbers = new ArrayList<>(logs.keySet());
         Collections.sort(carNumbers);
 
         List<Integer> payments = new ArrayList<>();
         for (String carNumber : carNumbers) {
-            // 주차장에서 입차상태인 경우 출차를 안했기 때문에 23:59에서 시간 계산을 해준다.
             final String END_TIME = "23:59";
             Car car = logs.get(carNumber);
-
             int parkingMinute = car.getParkingMinute();
+
+
+            // 주차장에서 입차상태인 경우 출차를 안했기 때문에 23:59에서 시간 계산을 해준다.
             if(!car.isStatus())
                 parkingMinute += (convertMinute(END_TIME) - car.getEntranceTime());
 
             // 주차 요금 계산
             int fee = defaultFee +  (int) Math.ceil((double) (parkingMinute - defaultMinute) / unitMinute) * unitFee;
 
+            // 주차 시간이 기본시간이하인 경우 기본 요금
             if(parkingMinute <= defaultMinute) fee = defaultFee;
             payments.add(fee);
         }
