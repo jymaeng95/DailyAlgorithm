@@ -73,11 +73,12 @@ public class Soluttion_17679_프렌즈4블록 {
             row--;
         }
     }
-    
+
     // 자기자신, 오른쪽, 아래, 대각오른쪽 아래 체크
-    private static final int[] DX = {0,0, 1, 1};
-    private static final int[] DY = {0,1, 0, 1};
+    private static final int[] DX = {0, 0, 1, 1};
+    private static final int[] DY = {0, 1, 0, 1};
     private static int count;
+
     private static boolean checkAndDelete(int row, int col, char character, char[][] newBoard, boolean[][] check) {
         for (int direction = 0; direction < 4; direction++) {
             int nextRow = row + DX[direction];
