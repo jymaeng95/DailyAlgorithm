@@ -32,18 +32,25 @@ public class Main_1039_교환 {
                 .map(pair -> new Possible(n, pair.getFirst(), pair.getSecond(), 1))
                 .collect(Collectors.toCollection(LinkedList::new));
 
+        // 셋을 이용해 중복 제거
         Set<String> available = new HashSet<>();
+
         while (!queue.isEmpty()) {
             int size = queue.size();
             boolean[] check = new boolean[1000001];
+
+            // 큐 사이즈만큼 돌리기
             for (int loop = 0; loop < size; loop++) {
                 Possible possibleNumber = queue.poll();
+
                 String number = possibleNumber.getNumber();
                 int firstIndex = possibleNumber.getFirst();
                 int secondIndex = possibleNumber.getSecond();
                 int turn = possibleNumber.getTurn();
 
                 String afterSwap = swapNumber(firstIndex, secondIndex, number);
+
+                // 이미 해당 턴에 체크했거나, 0으로 시작하는 경우 제외
                 if (afterSwap.startsWith("0") || check[Integer.parseInt(afterSwap)]) continue;
                 check[Integer.parseInt(afterSwap)] = true;
 
@@ -52,15 +59,19 @@ public class Main_1039_교환 {
                     available.add(afterSwap);
                     continue;
                 }
+
                 // 변경된 값 큐에 넣기
                 for (Pair pair : pairs) {
                     queue.add(new Possible(afterSwap, pair.getFirst(), pair.getSecond(), turn + 1));
                 }
             }
         }
+
+        // 최대값 구하기
         return available.stream().mapToInt(Integer::parseInt).max().getAsInt();
     }
 
+    // 숫자 교환
     private static String swapNumber(int firstIndex, int secondIndex, String n) {
         return n.substring(0, firstIndex) + n.charAt(secondIndex) +
                 n.substring(firstIndex + 1, secondIndex) + n.charAt(firstIndex) + n.substring(secondIndex + 1);
