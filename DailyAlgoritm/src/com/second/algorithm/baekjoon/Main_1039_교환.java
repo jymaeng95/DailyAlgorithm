@@ -71,7 +71,7 @@ public class Main_1039_교환 {
         return available.stream().mapToInt(Integer::parseInt).max().getAsInt();
     }
 
-    // 숫자 교환
+    // 숫자 교환103
     private static String swapNumber(int firstIndex, int secondIndex, String n) {
         return n.substring(0, firstIndex) + n.charAt(secondIndex) +
                 n.substring(firstIndex + 1, secondIndex) + n.charAt(firstIndex) + n.substring(secondIndex + 1);
