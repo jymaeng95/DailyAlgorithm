@@ -1,6 +1,6 @@
 package com.algorithm.Programmers.test;
 
-public class Solution_DevMatching_2 {
+public class  Solution_DevMatching_2 {
     public static void main(String[] args) {
         int n = 5;
         boolean horizontal = false;

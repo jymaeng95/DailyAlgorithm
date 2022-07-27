@@ -48,7 +48,6 @@ public class Main_21610_마법사_상어와_비바라기 {
 
     private static final int[] DX = {0, 0, -1, -1, -1, 0, 1, 1, 1};
     private static final int[] DY = {0, -1, -1, 0, 1, 1, 1, 0, -1};
-    private static final int LEFT = 1, LEFT_UP = 2, UP = 3, RIGHT_UP = 4, RIGHT = 5, RIGHT_DOWN = 6, DOWN = 7, LEFT_DOWN = 8;
 
     private static boolean[][] commandSkill(boolean[][] cloud, int[][] baskets, int direction, int distance) {
         /**
