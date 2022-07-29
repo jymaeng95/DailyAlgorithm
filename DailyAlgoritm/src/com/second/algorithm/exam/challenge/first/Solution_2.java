@@ -1,4 +1,4 @@
-package com.second.algorithm.exam;
+package com.second.algorithm.exam.challenge.first;
 
 import java.util.HashMap;
 import java.util.Map;

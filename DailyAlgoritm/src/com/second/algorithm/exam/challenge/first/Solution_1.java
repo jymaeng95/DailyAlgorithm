@@ -1,4 +1,4 @@
-package com.second.algorithm.exam;
+package com.second.algorithm.exam.challenge.first;
 
 public class Solution_1 {
     public static void main(String[] args) {
