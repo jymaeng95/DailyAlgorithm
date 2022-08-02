@@ -7,9 +7,9 @@ import java.util.List;
 public class Solution_60061_기둥과_보_설치 {
     public static void main(String[] args) {
         int n = 5;
-        int[][] build_frame = {{1, 0, 0, 1}, {1, 1, 1, 1}, {2, 1, 0, 1}, {2, 2, 1, 1}, {5, 0, 0, 1}, {5, 1, 0, 1}, {4, 2, 1, 1}, {3, 2, 1, 1}};
+//        int[][] build_frame = {{1, 0, 0, 1}, {1, 1, 1, 1}, {2, 1, 0, 1}, {2, 2, 1, 1}, {5, 0, 0, 1}, {5, 1, 0, 1}, {4, 2, 1, 1}, {3, 2, 1, 1}};
 
-//        int[][] build_frame = {{0,0,0,1},{2,0,0,1},{4,0,0,1},{0,1,1,1},{1,1,1,1},{2,1,1,1},{3,1,1,1},{2,0,0,0},{1,1,1,0},{2,2,0,1}};
+        int[][] build_frame = {{0, 0, 0, 1}, {2, 0, 0, 1}, {4, 0, 0, 1}, {0, 1, 1, 1}, {1, 1, 1, 1}, {2, 1, 1, 1}, {3, 1, 1, 1}, {2, 0, 0, 0}, {1, 1, 1, 0}, {2, 2, 0, 1}};
         int[][] rst = solution(n, build_frame);
         for (int[] ints : rst) {
             for (int x : ints) {
@@ -57,24 +57,24 @@ public class Solution_60061_기둥과_보_설치 {
             else {
                 if (structure == COLUMN) {
                     if (checkDelete(x, y, built, structure)) {
-                        built[x][y][UP] = built[x+1][y][DOWN] = false;
+                        built[x][y][UP] = built[x + 1][y][DOWN] = false;
                     }
                 } else {
                     if (checkDelete(x, y, built, structure)) {
-                        built[x][y][RIGHT] = built[x][y+1][LEFT] = false;
+                        built[x][y][RIGHT] = built[x][y + 1][LEFT] = false;
                     }
                 }
             }
         }
 
         List<Structure> structureList = new ArrayList<>();
-        for (int row = 0; row < n; row++) {
-            for (int col = 0; col < n; col++) {
+        for (int row = 0; row <= n; row++) {
+            for (int col = 0; col <= n; col++) {
                 if (built[row][col][UP] && built[row + 1][col][DOWN]) {
-                    structureList.add(new Structure(row, col, COLUMN));
+                    structureList.add(new Structure(col, row, COLUMN));
                 }
-                if(built[row][col][RIGHT] && built[row][col+1][LEFT]) {
-                    structureList.add(new Structure(row, col, BEAM));
+                if (built[row][col][RIGHT] && built[row][col + 1][LEFT]) {
+                    structureList.add(new Structure(col, row, BEAM));
                 }
             }
         }
@@ -94,8 +94,8 @@ public class Solution_60061_기둥과_보_설치 {
     private static boolean checkDelete(int x, int y, boolean[][][] built, int structure) {
         if (structure == COLUMN) {
             // 기둥을 삭제하는 경우 해당 좌표에서 연결된 보가 있거나 위에 기둥이 있다면 삭제할 수 없다.
-            return (built[x][y][LEFT] && built[x][y - 1][DOWN]) || (built[x][y][RIGHT] && built[x][y + 1][DOWN])
-                    || (built[x][y - 1][RIGHT] && built[x][y][LEFT] && built[x][y][RIGHT] && built[x][y + 1][LEFT]);
+            return (built[x + 1][y][LEFT] && built[x][y - 1][DOWN]) || (built[x + 1][y][RIGHT] && built[x][y + 1][DOWN])
+                    || (built[x + 1][y - 1][LEFT] && built[x + 1][y - 2][RIGHT] && built[x + 1][y + 1][RIGHT] && built[x + 1][y + 2][LEFT]);
         } else {
             // 보를 삭제할 때 해당 좌표 양쪽에 보를 확인하고 위에 현재 좌표에 기둥이 있는지 확인한다.
             return (built[x][y][DOWN] || built[x][y - 1][DOWN]) || (built[x][y + 1][DOWN] || built[x][y + 2][DOWN]) || (!built[x][y][UP] && !built[x][y + 1][UP]);
@@ -138,8 +138,8 @@ public class Solution_60061_기둥과_보_설치 {
         @Override
 
         public int compareTo(Structure o) {
-            if(x == o.x) {
-                if(y == o.y) {
+            if (x == o.x) {
+                if (y == o.y) {
                     return Integer.compare(structure, o.structure);
                 }
                 return Integer.compare(y, o.y);
