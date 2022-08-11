@@ -50,6 +50,8 @@ public class Main_2623_음악프로그램 {
         }
 
         List<Integer> orders = new ArrayList<>();
+
+        // 위상 정렬 시작
         while (!queue.isEmpty()) {
             Integer singer = queue.poll();
             orders.add(singer);
@@ -61,7 +63,7 @@ public class Main_2623_음악프로그램 {
             }
         }
 
-        if(orders.size() < N) return new int[]{0};
-        return orders.stream().mapToInt(Integer::intValue).toArray();
+        if(orders.size() < N) return new int[]{0};  // 모든 가수의 순서가 정해지지 않은 경우 = size가 N 보다 작은 경우
+        return orders.stream().mapToInt(Integer::intValue).toArray();   // List to Array
     }
 }

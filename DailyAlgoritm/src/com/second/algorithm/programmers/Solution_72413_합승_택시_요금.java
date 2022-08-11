@@ -33,7 +33,9 @@ public class Solution_72413_합승_택시_요금 {
         floydWarshall(n, fees);
 
         // 최소 요금 구하기
-        int minFee = fees[s][a] + fees[s][b];
+        int minFee = fees[s][a] + fees[s][b]; // 최초 합승 안한 경우가 최소
+
+        // 합승한 경우 s에서 출발해 도착할 수 있는 도시에서 다시 각각의 도시로의 최소요금 구한 값과 비교
         for (int city = 1; city <= n; city++) {
             minFee = Math.min(minFee, fees[s][city] + fees[city][a] + fees[city][b]);
         }
