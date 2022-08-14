@@ -2,44 +2,45 @@ package com.second.algorithm.exam.challenge.third;
 
 public class Solution_3 {
     public static void main(String[] args) {
-        int k = 80;
-        int[][] dungeons = {{80, 20}, {50, 40}, {30, 10}};
+        int distance = 10;
+//        int[][] scope = {{7, 8}, {4, 6}, {11,10}};
+        int[][] scope = {{3, 4}, {5, 8}};
+//        int[][] times = {{2, 2}, {2, 4}, {3, 3}};
+        int[][] times = {{2, 5}, {4, 3}};
 
-        int rst = solution(k, dungeons);
+        int rst = solution(distance, scope, times);
         System.out.println("rst = " + rst);
     }
 
-    private static int solution(int k, int[][] dungeons) {
-        boolean[] explores = new boolean[dungeons.length];
+    private static int solution(int distance, int[][] scope, int[][] times) {
+        int move = distance;
 
-        exploreCount = 0;   // 탐험한 던전 개수
-        exploreDungeon(0,k, dungeons, explores);
+        for (int person = 0; person < scope.length; person++) {
+            // 시작 시간, 종료 시간
+            int startTime = 1;
+            int endTime = startTime + times[person][0] - 1;
+            int elapsed = times[person][0] + times[person][1];
 
-        return exploreCount;
-    }
+            // 감시 구역 시작과 종료
+            int watchStart = scope[person][0];
+            int watchEnd = scope[person][1];
 
-    private static int exploreCount;
-    private static void exploreDungeon(int count, int curTired, int[][] dungeons, boolean[] explores) {
-        // 방문한 던전 개수 갱신
-        exploreCount = Math.max(exploreCount, count);
+            // 감시 구역이 정렬 안되어 있음
+            if(watchStart > watchEnd) {
+                watchStart = scope[person][1];
+                watchEnd = scope[person][0];
+            }
 
-        // 피로도 모두 소모 한 경우 리턴
-        if(curTired < 1) return;
-
-
-        // 던전 방문 선택
-        for (int order = 0; order < dungeons.length; order++) {
-            if(!explores[order]) {
-                int minTired = dungeons[order][0];
-                int useTired = dungeons[order][1];
-
-                // 현재 피로도가 최소 요구 피로도보다 높거나 같으면 던전 입장
-                if(curTired >= minTired) {
-                    explores[order] = true;
-                    exploreDungeon(count + 1, curTired - useTired, dungeons, explores);
-                    explores[order] = false;
+            // 근무시간에 감시구역 도달하는 경우 => 감시구역 == 근무시간
+            for (int index = watchStart; index <= watchEnd; index++) {
+                // 근무시간은 반복되기 때문에 경과 시간으로 나머지 연산 (1-3분 동안 감시하고 2분 휴식 : [3,2] 1분 -> 6분 -> 11분 근무 시작 / 3분 -> 8분 -> 13분 근무 종료
+                // 감시 구역을 각각 경과 시간으로 나눠 나머지가 시작시간과 종료시간과 동일하면 감시에 걸린 경우 :  나머지 연산해서 1분 - 3분에 포함되는 경우 갱신
+                if(index % elapsed >= startTime && index % elapsed <= endTime) {
+                    move = Math.min(index, move);
+                    break;
                 }
             }
         }
+        return move;
     }
 }

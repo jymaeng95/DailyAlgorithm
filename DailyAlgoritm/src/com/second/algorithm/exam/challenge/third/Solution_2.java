@@ -1,21 +1,42 @@
 package com.second.algorithm.exam.challenge.third;
 
-import java.util.Arrays;
+import java.util.Stack;
 
 public class Solution_2 {
     public static void main(String[] args) {
-        int[] levels = {1, 2, 3, 4, 5, 6, 7, 8, 9};
-        int rst = solution(levels);
+        int[] ingredient = {1,3,2,1,2,1,3,1,2};
+        int rst = solution(ingredient);
         System.out.println("rst = " + rst);
     }
 
-    private static int solution(int[] levels) {
-        if(levels.length < 4) return -1;
-        Arrays.sort(levels);
+    private static int solution(int[] ingredient) {
+        Stack<Integer> stack = new Stack<>();
+        int[] orders = {3, 2, 1};
+        int count = 0;
+        for (int food : ingredient) {
+            // 빵인 경우
+            if (food == 1) {
+                boolean hamburger = true;
 
-        double size = levels.length * 0.25;
+                // 뒤에서 세개 확인
+                for (int index = 1; index <= 3; index++) {
+                    if (stack.size() - index < 0 || stack.get(stack.size() - index) != orders[index - 1]) {
+                        hamburger = false;
+                        break;
+                    }
+                }
 
-        return levels[levels.length - (int) size];
+                // 순서 동일한 경우 스택에서 3개 빼주기
+                if (hamburger) {
+                    for (int loop = 1; loop <= 3; loop++) stack.pop();
+                    count++;
+                } else {
+                    stack.push(food);
+                }
+            } else {
+                stack.push(food);
+            }
+        }
+        return count;
     }
 }
-
