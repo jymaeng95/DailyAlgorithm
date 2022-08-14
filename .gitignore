@@ -1,5 +1,5 @@
 # Project exclude paths
 /out/
 
-/src/com/second/algorithm/exam/street
-/src/com/second/algorithm/exam/toss
+/DailyAlgoritm/src/com/second/algorithm/exam/toss/
+/DailyAlgoritm/src/com/second/algorithm/exam/street/
