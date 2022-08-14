@@ -14,7 +14,7 @@ public class Solution_3 {
         Arrays.stream(rst).forEach(System.out::println);
 
     }
-
+    private static Map<Integer, List<Integer>> tree;
     private static List<List<Integer>> position;
     private static final int INF = (int) 1e9;
 
@@ -35,7 +35,6 @@ public class Solution_3 {
             position.get(endSite).add(startSite);
         }
 
-        // 목적지에 대해서 BFS 탐색
         int[] distance = new int[n + 1];
         Arrays.fill(distance, INF);
 

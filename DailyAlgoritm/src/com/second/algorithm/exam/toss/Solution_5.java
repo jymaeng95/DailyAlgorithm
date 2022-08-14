@@ -1,4 +1,4 @@
-package com.second.algorithm.exam.challenge.third;
+package com.second.algorithm.exam.toss;
 
 import java.util.HashMap;
 import java.util.Map;

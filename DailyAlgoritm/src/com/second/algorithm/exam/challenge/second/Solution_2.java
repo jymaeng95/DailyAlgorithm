@@ -16,6 +16,7 @@ public class Solution_2 {
         // 마지막보다 한개 전까지 확인 (두부분으로 나눠야 하기 때문에)
         int[] left = new int[topping.length - 1];
         Set<Integer> leftSet = new HashSet<>();
+
         for (int index = 0; index < topping.length - 1; index++) {
             leftSet.add(topping[index]);
 
@@ -26,6 +27,7 @@ public class Solution_2 {
         // 거꾸로 1까지  확인 (두부분으로 나눠야 하기 때문에)
         int[] right = new int[topping.length - 1];
         Set<Integer> rightSet = new HashSet<>();
+
         for (int index = topping.length - 1; index > 0; index--) {
             rightSet.add(topping[index]);
             right[index-1] = rightSet.size();
