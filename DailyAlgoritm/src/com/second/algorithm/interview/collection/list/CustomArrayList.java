@@ -102,14 +102,37 @@ public class CustomArrayList<E> implements CustomList<E> {
         add(0, value);
     }
 
+    // 파라미터 인덱스 삭제
     @Override
     public E remove(int index) {
-        return null;
+        if(index >= size || index < 0 )
+            throw new IndexOutOfBoundsException();
+
+        // 해당 인덱스 삭제 후 댕겨주기
+        E element = (E) array[index];
+        array[index] = null;
+
+        for (int i = index; i < size - 1; i++) {
+            array[i] = array[i + 1];
+            array[i + 1] = null;
+        }
+
+        size--;
+        resize();
+
+        return element;
     }
 
+    // 동일 값 존재 시 가장 처음에 마주치는 원소 삭제
     @Override
     public boolean remove(Object value) {
-        return false;
+        int removeIndex = indexOf(value);
+
+        // 원소가 없는 경우
+        if(removeIndex < 0) return false;
+        remove(removeIndex);
+
+        return true;
     }
 
     // 데이터 조회
@@ -121,14 +144,38 @@ public class CustomArrayList<E> implements CustomList<E> {
         return (E) array[index];
     }
 
+    // 해당하는 인덱스에 데이터 변경
     @Override
     public void set(int index, E value) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
 
+        array[index] = value;
     }
 
+    // 데이터 포함하는지 확인(indexOf)
     @Override
     public boolean contains(Object value) {
-        return false;
+        return indexOf(value) >= 0;
+    }
+
+    // 파라미터 값이 존재하는 경우 인덱스 리턴
+    public int indexOf(Object value) {
+        for (int index = 0; index < size; index++) {
+            if(array[index].equals(value)) return index;
+        }
+
+        return -1;
+    }
+
+    // 파라미터 값이 존재하는 마지막 인덱스 리턴
+    public int lastIndexOf(Object value) {
+        for (int index = size - 1; index >= 0; index--) {
+            if(array[index].equals(value)) return index;
+        }
+
+        return -1;
     }
 
     // 사이즈 조회
@@ -151,5 +198,18 @@ public class CustomArrayList<E> implements CustomList<E> {
 
         size = 0;
         resize();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (Object value : array) {
+            sb.append(value + ", ");
+        }
+        sb.trimToSize();
+        sb.deleteCharAt(sb.length() - 1);
+        sb.append("]");
+        return sb.toString();
     }
 }
