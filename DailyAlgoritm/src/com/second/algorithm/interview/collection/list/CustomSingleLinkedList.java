@@ -2,11 +2,12 @@ package com.second.algorithm.interview.collection.list;
 
 import java.util.NoSuchElementException;
 
-public class CustomSingleLinkedList<E> implements CustomList<E>{
+public class CustomSingleLinkedList<E> implements CustomList<E> {
     // head, tail
     private Node<E> head;
     private Node<E> tail;
     private int size;
+
     public CustomSingleLinkedList() {
         head = null;
         tail = null;
@@ -36,7 +37,7 @@ public class CustomSingleLinkedList<E> implements CustomList<E>{
         size++;
 
         // 사이즈가 1개인 경우
-        if(head.next == null)
+        if (head.next == null)
             tail = head;
     }
 
@@ -44,7 +45,7 @@ public class CustomSingleLinkedList<E> implements CustomList<E>{
         Node<E> newNode = new Node<E>(value);
 
         // 저장된 노드가 없는 경우 addFirst
-        if(size == 0) {
+        if (size == 0) {
             addFirst(value);
             return;
         }
@@ -67,8 +68,8 @@ public class CustomSingleLinkedList<E> implements CustomList<E>{
             throw new IndexOutOfBoundsException();
         }
 
-        if(index == 0) addFirst(value);
-        else if(index == size) addLast(value);
+        if (index == 0) addFirst(value);
+        else if (index == size) addLast(value);
         else {
             Node<E> prevNode = search(index - 1);
             Node<E> indexNode = prevNode.next;
@@ -83,7 +84,7 @@ public class CustomSingleLinkedList<E> implements CustomList<E>{
 
     // 가장 앞 노드 삭제
     public E remove() {
-        if(head == null)
+        if (head == null)
             throw new NoSuchElementException();
 
         // 삭제할 데이터
@@ -100,7 +101,7 @@ public class CustomSingleLinkedList<E> implements CustomList<E>{
         size--;
 
         // head 삭제 후 원소가 없는 경우 tail null 초기화
-        if(size == 0)
+        if (size == 0)
             tail = null;
 
         return element;
@@ -108,15 +109,65 @@ public class CustomSingleLinkedList<E> implements CustomList<E>{
 
     @Override
     public E remove(int index) {
-        return null;
+        // index 범위 밖인 경우
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+
+        if (index == 0) {
+            return remove();
+        }
+
+        // 인덱스만큼 이동
+        Node<E> prevNode = search(index - 1);
+        Node<E> removeNode = prevNode.next;
+        Node<E> nextNode = removeNode.next;
+
+        prevNode.next = null;
+        prevNode.next = nextNode;
+        if (prevNode.next == null)
+            tail = prevNode;
+
+        E element = removeNode.data;
+        removeNode.data = null;
+        removeNode.next = null;
+        size--;
+
+        return element;
     }
 
     @Override
     public boolean remove(Object value) {
+        Node<E> prevNode = head;
         Node<E> move = head;
+        boolean hasValue = false;
 
+        while (move != null) {
+            if (value.equals(move.data)) {
+                hasValue = true;
+                break;
+            }
+            prevNode = move;
+            move = move.next;
+        }
 
-        return false;
+        if (!hasValue) return false;
+
+        // 값이 있는 경우
+        if (move.equals(head)) {
+            remove();
+        } else {
+            prevNode.next = null;
+            prevNode.next = move.next;
+
+            if (prevNode.next == null) {
+                tail = prevNode;
+            }
+            move.data = null;
+            move.next = null;
+            size--;
+        }
+        return true;
     }
 
     // value index 찾기
@@ -125,7 +176,7 @@ public class CustomSingleLinkedList<E> implements CustomList<E>{
         int index = 0;
 
         while (move.next != null) {
-            if(move.data.equals(value)) return index;
+            if (move.data.equals(value)) return index;
             move = move.next;
             index++;
         }
@@ -175,5 +226,20 @@ public class CustomSingleLinkedList<E> implements CustomList<E>{
 
         head = tail = null;
         size = 0;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder("[");
+
+        Node<E> move = head;
+        while (move != null) {
+            sb.append(move.data +",");
+            move = move.next;
+        }
+        sb.deleteCharAt(sb.length() - 1);
+        sb.append("]");
+
+        return sb.toString();
     }
 }
