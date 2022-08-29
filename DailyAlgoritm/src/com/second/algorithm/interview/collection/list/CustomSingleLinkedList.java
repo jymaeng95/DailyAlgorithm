@@ -15,7 +15,7 @@ public class CustomSingleLinkedList<E> implements CustomList<E> {
     }
 
     // 인덱스로 노드 탐색
-    public Node<E> search(int index) {
+    private Node<E> search(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
