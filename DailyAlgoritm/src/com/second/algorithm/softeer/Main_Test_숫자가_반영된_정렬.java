@@ -47,7 +47,7 @@ public class Main_Test_숫자가_반영된_정렬 {
                 else if(compare < 0) return "<";
 
                 // 동일한 경우는 firstIndex or secondIndex까지 비교했기 때문에 index를 해당 위치까지 옮겨준다.
-                index = firstIndex;
+                index = firstIndex - 1;
             }
             // 둘다 숫자가 아닌경우는 아스키코드를 비교
             else {
