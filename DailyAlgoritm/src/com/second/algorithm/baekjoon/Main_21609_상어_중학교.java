@@ -34,10 +34,8 @@ public class Main_21609_상어_중학교 {
     private static final int[] DX = {-1, 1, 0, 0};
     private static final int[] DY = {0, 0, -1, 1};
     private static final int BLANK = -2;
-    private static final int R1 = 0, R2 = 1, R3 = 2, R4 = 3;
 
     private static int playGame(int[][] board) {
-        int rotate = R1;
         int score = 0;
         // 1. 블록 그룹 찾기 (그룹에 속한 블록 2개 이상, 동일 개수 => 무지개 블록, 행 큰것, 열 큰것 기준으로 선택)
         while (findBlockGroup(board)) {
@@ -46,70 +44,37 @@ public class Main_21609_상어_중학교 {
             score += Math.pow(group.getCount(), 2);
 
             // 3. 빈칸으로 블록 내리기(내리는 경우 -> 바닥에 닿거나, 다른 블록에 닿는 경우까지 내리기
-            gravityBlock(board, rotate);
+            gravityBlock(board);
 
             // 4. 90도 돌리기 (반시계)
-            if (rotate == R4) rotate = R1;
-            else rotate++;
+            board = rotate(board);
 
             // 5. 빈칸으로 블록 내리기
-            gravityBlock(board, rotate);
-            System.out.println("score = " + score);
+            gravityBlock(board);
         }
         return score;
     }
 
-    // 블록 내리기
-    private static void gravityBlock(int[][] board, int rotate) {
-        if (rotate == R1) {
-            for (int col = 0; col < N; col++) {
-                for (int row = N - 2; row >= 0; row--) {
-                    if (board[row][col] >= 0) {
-                        int index = row;
-                        while (index < N - 1 && board[index + 1][col] == BLANK) {
-                            board[index + 1][col] = board[index][col];
-                            board[index][col] = BLANK;
-                            index++;
-                        }
-                    }
-                }
+    private static int[][] rotate(int[][] board) {
+        int[][] arr = new int[N][N];
+
+        for (int row = 0, newCol = 0; row < N; row++, newCol++) {
+            for (int col = 0, newRow = N-1; col < N; col++, newRow--) {
+                arr[newRow][newCol] = board[row][col];
             }
-        } else if (rotate == R2) {
-            for (int row = 0; row < N; row++) {
-                for (int col = 1; col < N; col++) {
-                    if (board[row][col] >= 0) {
-                        int index = col;
-                        while (index > 0 && board[row][index - 1] == BLANK) {
-                            board[row][index - 1] = board[row][index];
-                            board[row][index] = BLANK;
-                            index--;
-                        }
-                    }
-                }
-            }
-        } else if (rotate == R3) {
-            for (int col = 0; col < N; col++) {
-                for (int row = 1; row < N; row++) {
-                    if (board[row][col] >= 0) {
-                        int index = row;
-                        while (index > 0 && board[index - 1][col] == BLANK) {
-                            board[index - 1][col] = board[index][col];
-                            board[index][col] = BLANK;
-                            index--;
-                        }
-                    }
-                }
-            }
-        } else {
-            for (int row = 0; row < N; row++) {
-                for (int col = N - 2; col >= 0; col--) {
-                    if (board[row][col] >= 0) {
-                        int index = col;
-                        while (index < N - 1 && board[row][index+1] == BLANK) {
-                            board[row][index+1] = board[row][index];
-                            board[row][index] = BLANK;
-                            index++;
-                        }
+        }
+        return arr;
+    }
+
+    private static void gravityBlock(int[][] board) {
+        for (int col = 0; col < N; col++) {
+            for (int row = N - 2; row >= 0; row--) {
+                if (board[row][col] >= 0) {
+                    int index = row;
+                    while (index < N - 1 && board[index + 1][col] == BLANK) {
+                        board[index + 1][col] = board[index][col];
+                        board[index][col] = BLANK;
+                        index++;
                     }
                 }
             }
