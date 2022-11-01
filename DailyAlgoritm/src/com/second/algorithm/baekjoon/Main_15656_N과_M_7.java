@@ -43,8 +43,8 @@ public class Main_15656_N과_M_7 {
         }
 
         for (int idx = 0; idx < N; idx++) {
-                values[count] = nums[idx];
-                makeSubsequence(count + 1, nums, values);
+            values[count] = nums[idx];
+            makeSubsequence(count + 1, nums, values);
         }
     }
 }
