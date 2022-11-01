@@ -29,6 +29,7 @@ public class Main_15656_N과_M_7 {
         makeSubsequence(0, nums, values);
         System.out.println(builder.toString());
 
+
         br.close();
     }
 
