@@ -8,6 +8,7 @@ import java.util.StringTokenizer;
 
 public class Main_2110_공유기_설치 {
     private static int N, C;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
@@ -15,51 +16,44 @@ public class Main_2110_공유기_설치 {
         N = Integer.parseInt(st.nextToken());
         C = Integer.parseInt(st.nextToken());
 
-        int[] house = new int[N];
-        for (int position = 0; position < N; position++) {
-            house[position] = Integer.parseInt(br.readLine());
+        int[] houses = new int[N];
+        for (int index = 0; index < N; index++) {
+            houses[index] = Integer.parseInt(br.readLine());
         }
 
-        int rst = setIpTime(house);
+        long rst = installMachine(houses);
         System.out.println(rst);
 
         br.close();
     }
 
-    private static int setIpTime(int[] house) {
-        // 거리를 기준으로 이분탐색을 진행한다. (이분탐색은 기준이 중요한듯 ... )
-        Arrays.sort(house);
-        int maxLength = house[N - 1] - house[0];
-        int start = 0;
-        int end = N - 1;
+    private static long installMachine(int[] houses) {
+        Arrays.sort(houses);
+        long min = 1;
+        long max = houses[N - 1];
+        long minLength = min;
+        while (min <= max) {
+            long mid = (min + max) / 2;
 
-        if(C == 2) return maxLength;
-
-        // 공유기 2개 설치했으므로 빼주고 시작
-        C -= 2;
-        boolean first = false;
-        boolean right = false;
-        while (start < end) {
-            int mid = (start + end) / 2;
-            
-
-            // 중간 위치에 공유기 설치 후 큰 거리에 있는 부분으로 탐색진행
-            if (house[end] - house[mid] > house[mid] - house[start]) {
-                if(!first) {
-                    first = true;
-                    right = true;
+            int count = 1;
+            int install = 0;
+            for (int index = 1; index < N; index++) {
+                if (houses[install] + mid <= houses[index]) {
+                    count ++;
+                    install = index;
                 }
-                maxLength = Math.min(maxLength, house[mid] - house[start]);
-                start = mid + 1;
             }
-            else {
-                end = mid;
+
+            // 개수가 적은 경우 길이를 줄여야한다.
+            if (count < C) {
+                max = mid - 1;
+            } else {
+                minLength = Math.max(mid, minLength);
+                min = mid + 1;
             }
-            C--;
         }
 
-
-        System.out.println("C = " + C);
-        return maxLength;
+        return minLength;
     }
 }
+
