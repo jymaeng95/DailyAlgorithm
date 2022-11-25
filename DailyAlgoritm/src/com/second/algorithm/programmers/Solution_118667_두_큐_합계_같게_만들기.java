@@ -25,7 +25,6 @@ public class Solution_118667_두_큐_합계_같게_만들기 {
         // 두 큐의 합이 동일한 경우
         if(sum1 == sum2) return 0;
 
-
         Queue<Integer> queueA = new LinkedList<>();
         Queue<Integer> queueB = new LinkedList<>();
 
