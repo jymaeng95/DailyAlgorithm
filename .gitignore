@@ -1,6 +1,7 @@
 # Project exclude paths
 /out/
 
+src/com/second/algorithm/exam/kakao/mobility
 src/com/second/algorithm/exam/socar
 src/com/second/algorithm/exam/devmatching
 src/com/second/algorithm/exam/line
